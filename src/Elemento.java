@@ -1,19 +1,19 @@
 public class Elemento {
-   public Espectador espectador;
+   public Espectador dado;
    public Elemento proximo;
 
    /**
     * Método construtor (sem verificação)
-    * @param espectador Um objeto Espectador.
+    * @param dado Um objeto Espectador.
     */
-   public Elemento(Espectador espectador) {
-      this.espectador = espectador;
+   public Elemento(Espectador dado) {
+      this.dado = dado;
       this.proximo = null;
    }
 
    public boolean equals(Object obj) {
       String comparacao = (String) obj;
 
-      return this.espectador.equals(comparacao);
+      return this.dado.equals(comparacao);
    }
 }

@@ -1,4 +1,4 @@
-public class Lista {
+public class ListaEspectadores {
    public Elemento sentinela;
    public Elemento ultimo;
 
@@ -6,7 +6,7 @@ public class Lista {
    /**
     * Método construtor (sem verificação)
     */
-   public Lista() {
+   public ListaEspectadores() {
       sentinela = new Elemento(null);
       ultimo = sentinela;
    }
@@ -23,10 +23,10 @@ public class Lista {
 
    /**
     * Insere Espectador na Lista
-    * @param quem Um objeto Espectador.
+    * @param dado Um objeto Espectador.
     */
-   public void inserir(Espectador quem) {
-      Elemento novo = new Elemento(quem);
+   public void inserir(Espectador dado) {
+      Elemento novo = new Elemento(dado);
       ultimo.proximo = novo;
       ultimo = novo;
    }
@@ -34,7 +34,7 @@ public class Lista {
 
    /**
     * Localiza Espectador via CPF
-    * @param cpf Identificador CPF do espectador.
+    * @param cpf Identificador CPF do meuDado.
     * @return O objeto Espectador localizado.
     */
    public Espectador localizar(String cpf) {
@@ -42,7 +42,7 @@ public class Lista {
 
       while (aux != null) {
          if (aux.equals(cpf))
-            return aux.espectador;
+            return aux.dado;
          else
             aux = aux.proximo;
       }
@@ -51,7 +51,11 @@ public class Lista {
    }
 
 
-
+   /**
+    * Remove elemento da lista via CPF
+    * @param cpf Código cpf do espectador.
+    * @return Retorna o espectador removido ou null se não for encontrado.
+    */
    public Espectador remover(String cpf) {
       Elemento aux = sentinela;
 
@@ -65,7 +69,7 @@ public class Lista {
             else
                saida.proximo = null;
 
-            return saida.espectador;
+            return saida.dado;
          }
          else
             aux = aux.proximo;
