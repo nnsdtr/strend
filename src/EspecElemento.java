@@ -1,12 +1,12 @@
-public class Elemento {
+public class EspecElemento {
    public Espectador dado;
-   public Elemento proximo;
+   public EspecElemento proximo;
 
    /**
     * Método construtor (sem verificação)
     * @param dado Um objeto Espectador.
     */
-   public Elemento(Espectador dado) {
+   public EspecElemento(Espectador dado) {
       this.dado = dado;
       this.proximo = null;
    }
