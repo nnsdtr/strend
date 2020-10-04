@@ -1,13 +1,17 @@
-public class ListaEspectadores {
-   public Elemento sentinela;
-   public Elemento ultimo;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class EspecLista {
+   public EspecElemento sentinela;
+   public EspecElemento ultimo;
 
 
    /**
     * Método construtor (sem verificação)
     */
-   public ListaEspectadores() {
-      sentinela = new Elemento(null);
+   public EspecLista() {
+      sentinela = new EspecElemento(null);
       ultimo = sentinela;
    }
 
@@ -26,7 +30,7 @@ public class ListaEspectadores {
     * @param dado Um objeto Espectador.
     */
    public void inserir(Espectador dado) {
-      Elemento novo = new Elemento(dado);
+      EspecElemento novo = new EspecElemento(dado);
       ultimo.proximo = novo;
       ultimo = novo;
    }
@@ -38,7 +42,7 @@ public class ListaEspectadores {
     * @return O objeto Espectador localizado.
     */
    public Espectador localizar(String cpf) {
-      Elemento aux = sentinela.proximo;
+      EspecElemento aux = sentinela.proximo;
 
       while (aux != null) {
          if (aux.equals(cpf))
@@ -57,11 +61,11 @@ public class ListaEspectadores {
     * @return Retorna o espectador removido ou null se não for encontrado.
     */
    public Espectador remover(String cpf) {
-      Elemento aux = sentinela;
+      EspecElemento aux = sentinela;
 
       while (aux.proximo != null) {
          if (aux.proximo.equals(cpf)) {
-            Elemento saida = aux.proximo;
+            EspecElemento saida = aux.proximo;
             aux.proximo = saida.proximo;
 
             if (saida == ultimo)
@@ -76,5 +80,26 @@ public class ListaEspectadores {
       }
 
       return null;
+   }
+
+
+   /**
+    * Carrega dados dos Espectadores na Lista
+    * @param caminho caminho do arquivo fonte
+    * @throws FileNotFoundException para erros de leitura de arquivo.
+    */
+   public void carregar(String caminho) throws FileNotFoundException {
+      Scanner leitorArq = new Scanner(new File(caminho));
+
+      while(leitorArq.hasNextLine()) {
+         String[] aux = leitorArq.nextLine().split(";");
+
+         Espectador novo = new Espectador();
+         novo.cpf = aux[0];
+         novo.nome = aux[1];
+         novo.login = aux[2];
+
+         this.inserir(novo);
+      }
    }
 }
