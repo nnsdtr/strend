@@ -12,6 +12,11 @@ public class Espectador {
       this.login = "";
    }
 
+   public String toString (){
+      String aux = "CPF: " + cpf + "\nNome: " + nome + "\nLogin: " + login;
+      return aux;
+   }
+
    public boolean equals(Object obj) {
       String comparacao = (String) obj;
 
