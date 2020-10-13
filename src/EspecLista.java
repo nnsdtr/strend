@@ -81,25 +81,4 @@ public class EspecLista {
 
       return null;
    }
-
-
-   /**
-    * Carrega dados dos Espectadores na Lista
-    * @param caminho caminho do arquivo fonte
-    * @throws FileNotFoundException para erros de leitura de arquivo.
-    */
-   public void carregar(String caminho) throws FileNotFoundException {
-      Scanner leitorArq = new Scanner(new File(caminho));
-
-      while(leitorArq.hasNextLine()) {
-         String[] aux = leitorArq.nextLine().split(";");
-
-         Espectador novo = new Espectador();
-         novo.cpf = aux[0];
-         novo.nome = aux[1];
-         novo.login = aux[2];
-
-         this.inserir(novo);
-      }
-   }
 }

@@ -12,9 +12,8 @@ public class Espectador {
       this.login = "";
    }
 
-   public String toString (){
-      String aux = "CPF: " + cpf + "\nNome: " + nome + "\nLogin: " + login;
-      return aux;
+   public String toString(){
+      return "CPF: " + cpf + "\nNome: " + nome + "\nLogin: " + login;
    }
 
    public boolean equals(Object obj) {
