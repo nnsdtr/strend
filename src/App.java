@@ -28,6 +28,7 @@ public class App {
       return lista;
    }
 
+
    /**
     * Imprimir no console o espectador
     * @param espectador Um objeto da classe Espectador.
