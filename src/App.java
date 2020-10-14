@@ -28,6 +28,17 @@ public class App {
       return lista;
    }
 
+   /**
+    * Imprimir no console o espectador
+    * @param espectador Um objeto da classe Espectador.
+    */
+   public static void imprimirEspectador(Espectador espectador) {
+      if(espectador != null)
+         System.out.println(espectador.toString());
+      else
+         System.out.println("Espectador não localizado.");
+   }
+
 
    /**
     * Método principal
@@ -37,8 +48,8 @@ public class App {
    public static void main(String[] args) throws FileNotFoundException {
       EspecLista dbEspectadores = carregar("fake_data.txt");
 
-      Espectador espectador = dbEspectadores.localizar("123.755.737-22");
+      Espectador espectador = dbEspectadores.localizar("123.745.737-22");
 
-      System.out.println(espectador.toString());
+      imprimirEspectador(espectador);
    }
 }
