@@ -49,7 +49,7 @@ public class App {
    public static void main(String[] args) throws FileNotFoundException {
       EspecLista dbEspectadores = carregar("fake_data.txt");
 
-      Espectador espectador = dbEspectadores.localizar("123.745.737-22");
+      Espectador espectador = dbEspectadores.localizar("123.755.737-22");
 
       imprimirEspectador(espectador);
    }
