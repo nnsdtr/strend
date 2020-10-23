@@ -2,7 +2,7 @@
 name: História de usuário
 about: História de usuário é uma descrição concisa de uma necessidade do usuário do
   produto sob o ponto de vista desse usuário. Deve ser simples e leve.
-title: "[HU] "
+title: "[HU] [ALTA|MÉDIA|BAIXA]"
 labels: história de usuário
 assignees: ''
 
