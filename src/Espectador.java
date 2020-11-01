@@ -13,7 +13,7 @@ public class Espectador {
    }
 
    public String toString(){
-      return "CPF: " + cpf + "\nNome: " + nome + "\nLogin: " + login;
+      return "CPF: " + cpf + " - Nome: " + nome + " - Login: " + login + "\n";
    }
 
    public boolean equals(Object obj) {
@@ -21,4 +21,9 @@ public class Espectador {
 
       return this.cpf.equals(comparacao);
    }
+
+   public int compareTo (Espectador outroEspec){
+      return this.cpf.compareTo(outroEspec.cpf);
+   }
+
 }
