@@ -49,8 +49,7 @@ public class HashSeries {
       while (this.vetorSeries[pos] != null && !this.vetorSeries[pos].removido)
          pos++;
 
-      ElemSerie novo = new ElemSerie(novaSerie);
-      this.vetorSeries[pos] = novo;
+      this.vetorSeries[pos] = new ElemSerie(novaSerie);
    }
 
    public Series localizar(String nome) {
@@ -78,9 +77,9 @@ public class HashSeries {
    }
 
    public void imprimir() {
-      for (int i=0; i < this.vetorSeries.length; i++) {
-         if (this.vetorSeries[i] != null)
-            System.out.println(this.vetorSeries[i].meuDado.toString());
+      for (ElemSerie elem : this.vetorSeries) {
+         if (elem != null && !elem.removido)
+            System.out.println(elem.meuDado.toString());
       }
    }
 }

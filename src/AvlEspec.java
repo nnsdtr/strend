@@ -48,6 +48,21 @@ public class AvlEspec {
     }
 
 
+    public Espectador localizar(String cpf) {
+        return localizar(raiz, cpf);
+    }
+
+    private Espectador localizar(Nodo nodo, String cpf) {
+        if (nodo == null) return null;
+
+        int cmp = nodo.meuDado.compareTo(cpf);
+        if (cmp > 0) return localizar(nodo.esquerda, cpf);
+        if (cmp < 0) return localizar(nodo.direita, cpf);
+
+        return nodo.meuDado;
+    }
+
+
     public boolean inserir(Espectador novo) {
         if (novo == null) return false;
         if (!contem(raiz, novo.cpf)) {

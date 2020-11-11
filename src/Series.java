@@ -14,7 +14,6 @@ public class Series {
       this.numeroTotalEpisodios = -1;
    }
 
-
    public int compareTo(LocalDate outraData){
       return this.dataDeLancamento.compareTo(outraData);
    }

@@ -45,11 +45,45 @@ public class App {
       return seriesLancadas;
    }
 
+   public static HashSeries carregarSeries(String caminho) throws FileNotFoundException {
+      Scanner sc = new Scanner(new File(caminho));
+      DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+      HashSeries hashTable = new HashSeries();
+
+      while(sc.hasNextLine()) {
+         String[] arr = sc.nextLine().split(";");
+         Series nova = new Series();
+
+         nova.nome = arr[0];
+         nova.dataDeLancamento = LocalDate.parse(arr[1], formatador);
+         nova.numeroTotalEpisodios = Integer.parseInt(arr[2]);
+
+         hashTable.inserir(nova);
+      }
+
+      sc.close();
+      return hashTable;
+   }
+
    public static void main(String[] args) throws FileNotFoundException {
       // Teste da AVL de Espectadores
-      AvlEspec espectadores = carregarEspectadores("strend/fake_data.txt");
+      AvlEspec espectadores = carregarEspectadores("fake_data.txt");
+
+      Espectador localizado = espectadores.localizar("002.072.557-41");
+      System.out.println(localizado.toString());
+
+
 
       // Teste da AVL de Series
-      AvlSeriesLancadas seriesLancadas = carregarSeriesLancadas("strend/series_FakeData.txt");
+      AvlSeriesLancadas seriesLancadas = carregarSeriesLancadas("series_FakeData.txt");
+
+
+
+      // Teste da Hash de Series
+      HashSeries seriesHash = carregarSeries("series_Fakedata.txt");
+
+      Series localizada = seriesHash.localizar("Breaking Bad");
+      System.out.println(localizada.toString());
+
    }
 }
