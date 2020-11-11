@@ -1,0 +1,15 @@
+809.448.935-97;Friends;215;5
+075.688.803-46;Breaking Bad;4
+460.744.717-03;Arquivo X;1
+893.293.130-51;Seinfeld;3
+363.920.504-93;Família Soprano;1
+517.268.181-79;I Love Lucy;2
+079.979.575-53;Mad Men;1
+807.891.962-04;Os Simpsons;5
+731.799.095-79;The West Wing;4
+011.903.378-00;Sex and the City;5
+184.830.202-97;M*A*S*H*;2
+339.101.173-41;Modern Family;4
+150.535.874-42;Lost;5
+521.045.447-93;Arrested Development;1
+301.241.296-41;The Walking Dead;5
