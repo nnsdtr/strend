@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Series {
    public String nome;
@@ -26,6 +25,10 @@ public class Series {
 
    public boolean equals(String comp) {
       return this.nome.equals(comp);
+   }
+
+   public String toString(){
+      return "Nome: " + nome + " - Data de Lançamento: " + dataDeLancamento + " - Nº de episódios: " + numeroTotalEpisodios;
    }
 
 }
