@@ -1,13 +1,75 @@
-import java.util.Date;
+import java.time.LocalDate;
 
-public class AvlSeriesLancamento {
+public class AvlSeriesLancadas {
+
+    public class ElementoListaNodo{
+        public String nomeSerieLancada;
+        public ElementoListaNodo proximo;
+
+        public ElementoListaNodo (String nome){
+            nomeSerieLancada = nome;
+            proximo = null;
+        }
+
+        public boolean equals(Object obj){
+            String comparacao = (String)obj;
+            return nomeSerieLancada.equals(comparacao);
+        }
+
+    }
+
+    public class ListaNodo{
+        public ElementoListaNodo primeiro;
+        public ElementoListaNodo ultimo;
+
+        public ListaNodo(){
+            primeiro = new ElementoListaNodo(null);
+            ultimo = primeiro;
+        }
+
+        public void inserirListaNodo(String novaSerie){
+            ElementoListaNodo novo = new ElementoListaNodo(novaSerie);
+            ultimo.proximo = novo;
+            ultimo = novo;
+        }
+
+        public boolean vaziaListaNodo(){
+            return (ultimo==primeiro);
+        }
+
+        public String retirarListaNodo (String serieRetirar){
+
+            ElementoListaNodo aux = primeiro;
+            while (aux.proximo!=null){
+                if ( aux.proximo.equals(serieRetirar) ){
+                    ElementoListaNodo retirada = aux.proximo;
+                    aux.proximo = retirada.proximo;
+
+                    if (retirada==ultimo){
+                        ultimo=aux;
+                    }
+                    else {
+                        retirada.proximo = null;
+                        return retirada.nomeSerieLancada;
+                    }
+                }
+                else {
+                    aux = aux.proximo;
+                }
+            }
+            return null;
+        }
+    }
+
     public class Nodo {
         public int fatorBalanco, altura;
-        public Series meuDado;
+        public ListaNodo meuDado;
+        public LocalDate dataNodo;
         public Nodo esquerda, direita;
 
-        public Nodo(Series novo) {
-            this.meuDado = novo;
+        public Nodo(LocalDate dataLancamento) {
+            this.meuDado = new ListaNodo();
+            this.dataNodo = dataLancamento;
         }
     }
 
@@ -35,14 +97,14 @@ public class AvlSeriesLancamento {
     }
 
 
-    public boolean contem(Date contemData) {
+    public boolean contem(Series contemData) {
         return contem(raiz, contemData);
     }
 
-    private boolean contem(Nodo nodo, Date contemData) {
+    private boolean contem(Nodo nodo, Series contemData) {
         if (nodo == null) return false;
 
-        int cmp = nodo.meuDado.dataDeLancamento.compareTo(contemData);
+        int cmp = nodo.dataNodo.compareTo(contemData.dataDeLancamento);
         if (cmp > 0) return contem(nodo.esquerda, contemData);
         if (cmp < 0) return contem(nodo.direita, contemData);
 
@@ -52,24 +114,31 @@ public class AvlSeriesLancamento {
 
     public boolean inserir(Series novo) {
         if (novo == null) return false;
-        if (!contem(raiz, novo.dataDeLancamento)) {
-            raiz = inserir(raiz, novo);
-            numNodos++;
-            return true;
-        }
-        return false;
+
+        raiz = inserir(raiz, novo);
+        numNodos++;
+        return true;
     }
 
-    private Nodo inserir(Nodo nodo, Series novo) {
-        if (nodo == null) return new Nodo(novo);
+    private Nodo inserir(Nodo nodo, Series novaSerie) {
+        if (nodo == null){
+            Nodo novoNodo = new Nodo(novaSerie.dataDeLancamento);
+            novoNodo.meuDado.inserirListaNodo(novaSerie.nome);
+            return novoNodo;
+        }
 
-        int cmp = novo.compareTo(nodo.meuDado);
+        int cmp = novaSerie.dataDeLancamento.compareTo(nodo.dataNodo);
 
         if (cmp < 0) {
-            nodo.esquerda = inserir(nodo.esquerda, novo);
+            nodo.esquerda = inserir(nodo.esquerda, novaSerie);
 
-        } else {
-            nodo.direita = inserir(nodo.direita, novo);
+        }
+        else if (cmp > 0){
+            nodo.direita = inserir(nodo.direita, novaSerie);
+        }
+        else {
+            nodo.meuDado.inserirListaNodo(novaSerie.nome);
+            return nodo;
         }
 
         atualizar(nodo);
@@ -77,23 +146,27 @@ public class AvlSeriesLancamento {
     }
 
 
-    public boolean remover(Date removerData) {
+    public boolean remover(Series removerSerie) {
         if (raiz == null) return false;
 
-        if (contem(raiz, removerData)) {
-            raiz = remover(raiz, removerData);
+        if (contem(raiz, removerSerie)) {
+            raiz = remover(raiz, removerSerie);
             numNodos--;
             return true;
         }
         return false;
     }
 
-    private Nodo remover(Nodo nodo, Date removerData) {
+    private Nodo remover(Nodo nodo, Series removerSerie) {
         if (nodo == null) return null;
 
-        int cmp = nodo.meuDado.compareTo(removerData);
-        if (cmp > 0) nodo.esquerda = remover(nodo.esquerda, removerData);
-        else if (cmp < 0) nodo.direita = remover(nodo.direita, removerData);
+        int cmp = nodo.dataNodo.compareTo(removerSerie.dataDeLancamento);
+        if (cmp > 0){
+            nodo.esquerda.meuDado.retirarListaNodo(removerSerie.nome);
+        }
+        else if (cmp < 0) {
+            nodo.direita.meuDado.retirarListaNodo(removerSerie.nome);
+        }
 
         else {
             int grau = grau(nodo);
@@ -103,7 +176,7 @@ public class AvlSeriesLancamento {
                 case 1:  return nodo.direita;
                 case 2:
                     nodo.meuDado = antecessor(nodo);
-                    nodo.esquerda = remover(nodo.esquerda, removerData);
+                    nodo.esquerda = remover(nodo.esquerda, removerSerie);
                     return nodo;
             }
         }
@@ -112,7 +185,7 @@ public class AvlSeriesLancamento {
         return balancear(nodo);
     }
 
-    private Series antecessor(Nodo nodo) {
+    private ListaNodo antecessor(Nodo nodo) {
         Nodo aux = nodo.esquerda;
         while (aux.direita != null)
             aux = aux.direita;
