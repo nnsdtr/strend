@@ -1,18 +1,26 @@
 import java.util.Date;
 
 public class Series {
-   public int id;
    public String nome;
-   public Date dataLancamento;
-   public int numEpisodios;
+   public Date dataDeLancamento;
+   public int numeroTotalEpisodios;
 
    /**
     * Método construtor
     */
    public Series() {
-      this.id = -1;
       this.nome = "unknown";
-      this.dataLancamento = new Date();
-      this.numEpisodios = -1;
+      this.dataDeLancamento = new Date();
+      this.numeroTotalEpisodios = -1;
    }
+
+
+   public int compareTo(Date outraData){
+      return this.dataDeLancamento.compareTo(outraData);
+   }
+
+   public int compareTo(Series outraSerie){
+      return this.dataDeLancamento.compareTo(outraSerie.dataDeLancamento);
+   }
+
 }

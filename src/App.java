@@ -27,6 +27,7 @@ public class App {
 //   }
 
    public static void main(String[] args) {
+      // Teste da AVL de Espectadores
       AvlEspec arvEspectadores = new AvlEspec();
 
       for (int i=0; i<10; i++){
@@ -44,6 +45,10 @@ public class App {
 
       String arvoreToda = arvEspectadores.preOrdem();
       System.out.println(arvoreToda);
+
+      // Teste da AVL de Series
+
+
 
    }
 }
