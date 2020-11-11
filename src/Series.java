@@ -1,8 +1,9 @@
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Series {
    public String nome;
-   public Date dataDeLancamento;
+   public LocalDate dataDeLancamento;
    public int numeroTotalEpisodios;
 
    /**
@@ -10,12 +11,12 @@ public class Series {
     */
    public Series() {
       this.nome = "unknown";
-      this.dataDeLancamento = new Date();
+      this.dataDeLancamento = LocalDate.MIN;
       this.numeroTotalEpisodios = -1;
    }
 
 
-   public int compareTo(Date outraData){
+   public int compareTo(LocalDate outraData){
       return this.dataDeLancamento.compareTo(outraData);
    }
 
