@@ -78,23 +78,24 @@ public class App {
    }
 
    public static void main(String[] args) throws FileNotFoundException {
-      // Teste da AVL de Espectadores
+      // Teste do carregamento da AVL de Espectadores
       AvlEspec espectadores = carregarEspectadores("strend/fake_data.txt");
 
+      // Teste do carregamento da AVL de Series
+      AvlSeriesLancadas seriesLancadas = carregarSeriesLancadas("strend/series_FakeData.txt");
+
+      // Teste do carregamento da Hash de Series
+      HashSeries seriesHash = carregarSeries("strend/series_Fakedata.txt");
+
+      // Teste da localização de Espectador por CPF
       Espectador localizado = espectadores.localizar("002.072.557-41");
       System.out.println(localizado.toString());
 
-      // Teste da AVL de Series
-      AvlSeriesLancadas seriesLancadas = carregarSeriesLancadas("strend/series_FakeData.txt");
-
-      // Teste da Hash de Series
-      HashSeries seriesHash = carregarSeries("strend/series_Fakedata.txt");
-
-      // Teste da localização por nome
+      // Teste da localização de Série por nome
       Series localizada = seriesHash.localizar("Breaking Bad");
       System.out.println(localizada.toString());
 
-      //Teste da localização por Data
+      //Teste da localização de Série por data
       buscaData("17/07/1997"); // Não existe
       buscaData("22/09/1994"); // Friends + Copia
 
