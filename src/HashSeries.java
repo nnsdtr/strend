@@ -6,6 +6,11 @@ public class HashSeries {
    public static class ElemSerie {
       public Series meuDado;
       public boolean removido;
+
+      public ElemSerie(Series dado) {
+         this.meuDado = dado;
+         this.removido = false;
+      }
    }
 
    private final int tamanho;
@@ -20,8 +25,8 @@ public class HashSeries {
 
    private Integer[] vetorPesos(int numMaxChar) {
       Integer[] pesos = new Integer[numMaxChar];
-      for(int i=1; i <= numMaxChar; i++)
-         pesos[i] = i;
+      for(int i=0; i < numMaxChar; i++)
+         pesos[i] = i+1;
 
       Collections.shuffle(Arrays.asList(pesos));
 
@@ -44,7 +49,8 @@ public class HashSeries {
       while (this.vetorSeries[pos] != null && !this.vetorSeries[pos].removido)
          pos++;
 
-      this.vetorSeries[pos].meuDado = novaSerie;
+      ElemSerie novo = new ElemSerie(novaSerie);
+      this.vetorSeries[pos] = novo;
    }
 
    public Series localizar(String nome) {
@@ -71,4 +77,10 @@ public class HashSeries {
       return this.vetorSeries[pos].meuDado;
    }
 
+   public void imprimir() {
+      for (int i=0; i < this.vetorSeries.length; i++) {
+         if (this.vetorSeries[i] != null)
+            System.out.println(this.vetorSeries[i].meuDado.toString());
+      }
+   }
 }

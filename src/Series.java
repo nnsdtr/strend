@@ -30,5 +30,4 @@ public class Series {
    public String toString(){
       return "Nome: " + nome + " - Data de Lançamento: " + dataDeLancamento + " - Nº de episódios: " + numeroTotalEpisodios;
    }
-
 }
