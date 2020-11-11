@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class AvlSeriesLancadas {
 
@@ -19,6 +21,18 @@ public class AvlSeriesLancadas {
     }
 
     public class ListaNodo{
+        public void imprimir( ){
+            if (this.vaziaListaNodo()){
+                System.out.println("Não existem séries lançadas nessa data.");
+            }
+            else{
+                ElementoListaNodo aux = this.primeiro.proximo;
+                while (aux != null){
+                    System.out.println(aux.nomeSerieLancada);
+                    aux = aux.proximo;
+                }
+            }
+        }
         public ElementoListaNodo primeiro;
         public ElementoListaNodo ultimo;
 
@@ -289,4 +303,17 @@ public class AvlSeriesLancadas {
 
         return aux;
     }
+
+    private final DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+
+    public Nodo localizar(Nodo nodo, String dataPesquisada) {
+        if (nodo == null) return null;
+
+        int cmp = nodo.dataNodo.compareTo( LocalDate.parse(dataPesquisada, formatador) );
+        if (cmp > 0) return localizar(nodo.esquerda, dataPesquisada);
+        if (cmp < 0) return localizar(nodo.direita, dataPesquisada);
+
+        return nodo;
+    }
+
 }

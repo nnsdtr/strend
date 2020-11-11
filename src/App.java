@@ -7,6 +7,11 @@ import java.util.Scanner;
 
 
 public class App {
+   private static HashSeries seriesHash = new HashSeries();
+
+   private static AvlSeriesLancadas seriesLancadas = new AvlSeriesLancadas();
+
+   private static DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 
    public static AvlEspec carregarEspectadores(String caminho) throws FileNotFoundException {
       Scanner leitorArq = new Scanner(new File(caminho));
@@ -27,12 +32,10 @@ public class App {
    }
 
    public static AvlSeriesLancadas carregarSeriesLancadas (String caminho) throws FileNotFoundException {
-      Scanner leitorArq = new Scanner(new File(caminho));
-      AvlSeriesLancadas seriesLancadas = new AvlSeriesLancadas();
-      DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+      Scanner leitorArqAVL = new Scanner(new File(caminho));
 
-      while (leitorArq.hasNextLine()){
-         String [] aux = leitorArq.nextLine().split(";");
+      while (leitorArqAVL.hasNextLine()){
+         String [] aux = leitorArqAVL.nextLine().split(";");
 
          Series nova = new Series();
          nova.nome = aux[0];
@@ -41,15 +44,13 @@ public class App {
 
          seriesLancadas.inserir(nova);
       }
-      leitorArq.close();
+      leitorArqAVL.close();
       return seriesLancadas;
    }
 
    public static HashSeries carregarSeries(String caminho) throws FileNotFoundException {
       Scanner sc = new Scanner(new File(caminho));
       DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
-      HashSeries hashTable = new HashSeries();
-
       while(sc.hasNextLine()) {
          String[] arr = sc.nextLine().split(";");
          Series nova = new Series();
@@ -58,32 +59,44 @@ public class App {
          nova.dataDeLancamento = LocalDate.parse(arr[1], formatador);
          nova.numeroTotalEpisodios = Integer.parseInt(arr[2]);
 
-         hashTable.inserir(nova);
+         seriesHash.inserir(nova);
       }
 
       sc.close();
-      return hashTable;
+      return seriesHash;
+   }
+
+   public static void buscaData(String dataPesquisada){
+      AvlSeriesLancadas.Nodo listaLocalizada = seriesLancadas.localizar(seriesLancadas.raiz, dataPesquisada);
+      System.out.println("Busca realizada na data " + dataPesquisada + ": ");
+      if (listaLocalizada == null){
+         System.out.println("Não existem séries lançadas nessa data.\n");
+      }
+      else {
+         listaLocalizada.meuDado.imprimir();
+      }
    }
 
    public static void main(String[] args) throws FileNotFoundException {
       // Teste da AVL de Espectadores
-      AvlEspec espectadores = carregarEspectadores("fake_data.txt");
+      AvlEspec espectadores = carregarEspectadores("strend/fake_data.txt");
 
       Espectador localizado = espectadores.localizar("002.072.557-41");
       System.out.println(localizado.toString());
 
-
-
       // Teste da AVL de Series
-      AvlSeriesLancadas seriesLancadas = carregarSeriesLancadas("series_FakeData.txt");
-
-
+      AvlSeriesLancadas seriesLancadas = carregarSeriesLancadas("strend/series_FakeData.txt");
 
       // Teste da Hash de Series
-      HashSeries seriesHash = carregarSeries("series_Fakedata.txt");
+      HashSeries seriesHash = carregarSeries("strend/series_Fakedata.txt");
 
+      // Teste da localização por nome
       Series localizada = seriesHash.localizar("Breaking Bad");
       System.out.println(localizada.toString());
+
+      //Teste da localização por Data
+      buscaData("17/07/1997"); // Não existe
+      buscaData("22/09/1994"); // Friends + Copia
 
    }
 }
