@@ -24,4 +24,8 @@ public class Series {
       return this.dataDeLancamento.compareTo(outraSerie.dataDeLancamento);
    }
 
+   public boolean equals(String comp) {
+      return this.nome.equals(comp);
+   }
+
 }
