@@ -2,7 +2,6 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class HashSeries {
-
    public static class ElemSerie {
       public Series meuDado;
       public boolean removido;

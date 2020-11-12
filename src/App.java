@@ -11,7 +11,7 @@ public class App {
 
    private static AvlSeriesLancadas seriesLancadas = new AvlSeriesLancadas();
 
-   private static DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+   private static final DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 
    public static AvlEspec carregarEspectadores(String caminho) throws FileNotFoundException {
       Scanner leitorArq = new Scanner(new File(caminho));
@@ -79,20 +79,31 @@ public class App {
 
    public static void main(String[] args) throws FileNotFoundException {
       // Teste da AVL de Espectadores
-      AvlEspec espectadores = carregarEspectadores("strend/fake_data.txt");
+      AvlEspec espectadores = carregarEspectadores("fake_data.txt");
 
       Espectador localizado = espectadores.localizar("002.072.557-41");
-      System.out.println(localizado.toString());
+      System.out.println("Espectador localizado: \n" + localizado.toString());
 
       // Teste da AVL de Series
-      AvlSeriesLancadas seriesLancadas = carregarSeriesLancadas("strend/series_FakeData.txt");
+      AvlSeriesLancadas seriesLancadas = carregarSeriesLancadas("series_FakeData.txt");
 
       // Teste da Hash de Series
-      HashSeries seriesHash = carregarSeries("strend/series_Fakedata.txt");
+      HashSeries seriesHash = carregarSeries("series_Fakedata.txt");
+      System.out.println("Séries Tabela Hash:");
+      seriesHash.imprimir();
 
       // Teste da localização por nome
       Series localizada = seriesHash.localizar("Breaking Bad");
-      System.out.println(localizada.toString());
+      System.out.println("\nSérie localizada: \n" + localizada.toString());
+
+      // Teste da remoção por nome
+      Series removida = seriesHash.remover("Breaking Bad");
+      System.out.println("\nSérie removida: \n" + removida.toString() + "\n");
+
+      System.out.println("Séries Tabela Hash (Atualizada):");
+      seriesHash.imprimir();
+      System.out.println("\n");
+
 
       //Teste da localização por Data
       buscaData("17/07/1997"); // Não existe
