@@ -32,7 +32,6 @@ public class AvlEspec {
             return (nodo.direita != null) ? 1 : 0;
     }
 
-
     public boolean contem(String cpf) {
         return contem(raiz, cpf);
     }
@@ -47,7 +46,6 @@ public class AvlEspec {
         return true;
     }
 
-
     public Espectador localizar(String cpf) {
         return localizar(raiz, cpf);
     }
@@ -61,7 +59,6 @@ public class AvlEspec {
 
         return nodo.meuDado;
     }
-
 
     public boolean inserir(Espectador novo) {
         if (novo == null) return false;
@@ -88,7 +85,6 @@ public class AvlEspec {
         atualizar(nodo);
         return balancear(nodo);
     }
-
 
     public boolean remover(String cpf) {
         if (raiz == null) return false;
@@ -132,7 +128,6 @@ public class AvlEspec {
 
         return aux.meuDado;
     }
-
 
     private void atualizar(Nodo nodo) {
         int alturaEsq = (nodo.esquerda == null) ? -1 : nodo.esquerda.altura;
@@ -214,7 +209,6 @@ public class AvlEspec {
         nodo.direita = rotacaoDir(nodo.direita);
         return casoDirDir(nodo);
     }
-
 
     public String preOrdem() {
         return preOrdem(this.raiz);

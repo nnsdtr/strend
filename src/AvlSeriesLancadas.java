@@ -110,7 +110,6 @@ public class AvlSeriesLancadas {
             return (nodo.direita != null) ? 1 : 0;
     }
 
-
     public boolean contem(Series contemData) {
         return contem(raiz, contemData);
     }
@@ -124,7 +123,6 @@ public class AvlSeriesLancadas {
 
         return true;
     }
-
 
     public boolean inserir(Series novo) {
         if (novo == null) return false;
@@ -158,7 +156,6 @@ public class AvlSeriesLancadas {
         atualizar(nodo);
         return balancear(nodo);
     }
-
 
     public boolean remover(Series removerSerie) {
         if (raiz == null) return false;
@@ -206,7 +203,6 @@ public class AvlSeriesLancadas {
 
         return aux.meuDado;
     }
-
 
     private void atualizar(Nodo nodo) {
         int alturaEsq = (nodo.esquerda == null) ? -1 : nodo.esquerda.altura;
@@ -288,7 +284,6 @@ public class AvlSeriesLancadas {
         nodo.direita = rotacaoDir(nodo.direita);
         return casoDirDir(nodo);
     }
-
 
     public String preOrdem() {
         return preOrdem(this.raiz);

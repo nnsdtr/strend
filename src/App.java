@@ -80,39 +80,37 @@ public class App {
    public static void main(String[] args) throws FileNotFoundException {
 
       // Teste da AVL de Espectadores
-      AvlEspec espectadores = carregarEspectadores("fake_data.txt");
-
-      Espectador localizado = espectadores.localizar("002.072.557-41");
-      System.out.println("Espectador localizado: \n" + localizado.toString());
+      AvlEspec espectadores = carregarEspectadores("dados2Espectadores2020-2.txt");
 
       // Teste da AVL de Series
-      AvlSeriesLancadas seriesLancadas = carregarSeriesLancadas("series_FakeData.txt");
+      AvlSeriesLancadas seriesLancadas = carregarSeriesLancadas("dados2SeriesTV2020-2.txt");
 
       // Teste da Hash de Series
-      HashSeries seriesHash = carregarSeries("series_Fakedata.txt");
-      System.out.println("Séries Tabela Hash:");
-      seriesHash.imprimir();
+      HashSeries seriesHash = carregarSeries("dados2SeriesTV2020-2.txt");
+
+      //System.out.println("Séries Tabela Hash:");
+      //seriesHash.imprimir();
 
       // Teste da localização de Espectador por CPF
-      Espectador localizado = espectadores.localizar("002.072.557-41");
+      Espectador localizado = espectadores.localizar("369382373-63");
       System.out.println(localizado.toString());
 
       // Teste da localização de Série por nome
-      Series localizada = seriesHash.localizar("Breaking Bad");
+      Series localizada = seriesHash.localizar("The Walking Bubbles - Temporada 7");
       System.out.println("\nSérie localizada: \n" + localizada.toString());
 
       // Teste da remoção por nome
-      Series removida = seriesHash.remover("Breaking Bad");
-      System.out.println("\nSérie removida: \n" + removida.toString() + "\n");
+      //Series removida = seriesHash.remover("Breaking Bad");
+      //System.out.println("\nSérie removida: \n" + removida.toString() + "\n");
 
-      System.out.println("Séries Tabela Hash (Atualizada):");
-      seriesHash.imprimir();
-      System.out.println("\n");
+      //System.out.println("Séries Tabela Hash (Atualizada):");
+      //seriesHash.imprimir();
+      //System.out.println("\n");
 
 
       //Teste da localização de Série por data
       buscaData("17/07/1997"); // Não existe
-      buscaData("22/09/1994"); // Friends + Copia
+      buscaData("20/01/2018"); // Friends + Copia
 
    }
 }
