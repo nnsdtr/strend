@@ -4,6 +4,8 @@ public class Series {
    public String nome;
    public LocalDate dataDeLancamento;
    public int numeroTotalEpisodios;
+   public float somaNotasValidas;
+   public int qtdNotasValidas;
 
    /**
     * Método construtor
@@ -12,6 +14,8 @@ public class Series {
       this.nome = "unknown";
       this.dataDeLancamento = LocalDate.MIN;
       this.numeroTotalEpisodios = -1;
+      this.somaNotasValidas = 0;
+      this.qtdNotasValidas = 0;
    }
 
    public int compareTo(LocalDate outraData){
