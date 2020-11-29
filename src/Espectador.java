@@ -1,8 +1,9 @@
 public class Espectador {
    public String cpf;
-   public String login;
    public String nome;
-   public EspecSeries series;
+   public String login;
+   public String senha;
+   public EspecAvalLista avaliacao;
 
    /**
     * Método construtor
@@ -11,7 +12,8 @@ public class Espectador {
       this.cpf = "";
       this.nome = "";
       this.login = "";
-      this.series = null;
+      this.senha = "";
+      this.avaliacao = null;
    }
 
    public String toString(){
