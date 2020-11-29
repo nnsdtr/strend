@@ -67,7 +67,31 @@ public class App {
       return seriesHash;
    }
 
-   public static void buscaData(String dataPesquisada){
+   public static void carregarAvaliacoes(String caminho, AvlEspec avlEspec, HashSeries hashSeries) throws FileNotFoundException {
+      Scanner leitorArqAval = new Scanner(new File(caminho));
+
+      while (leitorArqAval.hasNextLine()) {
+         String[] aux = leitorArqAval.nextLine().split(";");
+
+         String cpf = aux[0];
+         String serie = aux[1];
+         int numEpAssistidos = Integer.parseInt(aux[2]);
+         int nota = Integer.parseInt(aux[3]);
+
+         Espectador especUpdate = avlEspec.localizar(cpf);
+         if (especUpdate != null) especUpdate.avaliacao.inserir(serie, nota);
+
+         Series serieUpdate = hashSeries.localizar(serie);
+         if (serieUpdate != null)
+            if (numEpAssistidos == serieUpdate.numeroTotalEpisodios) {
+               serieUpdate.somaNotasValidas += nota;
+               serieUpdate.qtdNotasValidas++;
+            }
+      }
+      leitorArqAval.close();
+   }
+
+   public static void buscaData(String dataPesquisada) {
       AvlSeriesLancadas.Nodo listaLocalizada = seriesLancadas.localizar(seriesLancadas.raiz, dataPesquisada);
       System.out.println("Busca realizada na data " + dataPesquisada + ": ");
       if (listaLocalizada == null){
@@ -89,16 +113,25 @@ public class App {
       // Teste da Hash de Series
       HashSeries seriesHash = carregarSeries("dados2SeriesTV2020-2.txt");
 
+      // Teste de carregamento das Avaliações
+      carregarAvaliacoes("dados2AvaliacaoSeries2020-2.txt", espectadores, seriesHash);
+
+
       //System.out.println("Séries Tabela Hash:");
       //seriesHash.imprimir();
 
       // Teste da localização de Espectador por CPF
       Espectador localizado = espectadores.localizar("369382373-63");
       System.out.println(localizado.toString());
+      System.out.println(localizado.toStringAvaliacoes());
 
       // Teste da localização de Série por nome
       Series localizada = seriesHash.localizar("The Walking Bubbles - Temporada 7");
       System.out.println("\nSérie localizada: \n" + localizada.toString());
+      System.out.println("Soma das notas: " + localizada.somaNotasValidas);
+      System.out.println("Qtd de notas: " + localizada.qtdNotasValidas);
+      System.out.println("Média das notas: " + localizada.somaNotasValidas / (float) localizada.qtdNotasValidas );
+
 
       // Teste da remoção por nome
       //Series removida = seriesHash.remover("Breaking Bad");
