@@ -1,6 +1,12 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,intellij,visualstudiocode,sublimetext
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,intellij,visualstudiocode,sublimetext
 
+### Arquivos de carregamento ###
+dados2AvaliacaoSeries2020-2.txt
+dados2Espectadores2020-2.txt
+dados2SeriesTV2020-2.txt
+
+
 ### Java ###
 # Compiled class file
 *.class
