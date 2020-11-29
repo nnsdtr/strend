@@ -1,7 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -17,7 +17,7 @@ public class App {
       Scanner leitorArq = new Scanner(new File(caminho));
       AvlEspec arvore = new AvlEspec();
 
-      while(leitorArq.hasNextLine()) {
+      while (leitorArq.hasNextLine()) {
          String[] aux = leitorArq.nextLine().split(";");
 
          Espectador novo = new Espectador();
@@ -34,7 +34,7 @@ public class App {
    public static AvlSeriesLancadas carregarSeriesLancadas (String caminho) throws FileNotFoundException {
       Scanner leitorArqAVL = new Scanner(new File(caminho));
 
-      while (leitorArqAVL.hasNextLine()){
+      while (leitorArqAVL.hasNextLine()) {
          String [] aux = leitorArqAVL.nextLine().split(";");
 
          Series nova = new Series();
@@ -49,10 +49,10 @@ public class App {
    }
 
    public static HashSeries carregarSeries(String caminho) throws FileNotFoundException {
-      Scanner sc = new Scanner(new File(caminho));
+      Scanner leitorArqHash = new Scanner(new File(caminho));
       DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
-      while(sc.hasNextLine()) {
-         String[] arr = sc.nextLine().split(";");
+      while (leitorArqHash.hasNextLine()) {
+         String[] arr = leitorArqHash.nextLine().split(";");
          Series nova = new Series();
 
          nova.nome = arr[0];
@@ -62,7 +62,7 @@ public class App {
          seriesHash.inserir(nova);
       }
 
-      sc.close();
+      leitorArqHash.close();
       return seriesHash;
    }
 
