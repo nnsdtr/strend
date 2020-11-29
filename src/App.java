@@ -24,6 +24,7 @@ public class App {
          novo.cpf = aux[0];
          novo.nome = aux[1];
          novo.login = aux[2];
+         novo.senha = aux[3];
 
          arvore.inserir(novo);
       }
