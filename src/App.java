@@ -104,6 +104,8 @@ public class App {
 
    public static void main(String[] args) throws FileNotFoundException {
 
+      long tic = System.nanoTime();
+
       // Teste da AVL de Espectadores
       AvlEspec espectadores = carregarEspectadores("dados2Espectadores2020-2.txt");
 
@@ -115,6 +117,12 @@ public class App {
 
       // Teste de carregamento das Avaliações
       carregarAvaliacoes("dados2AvaliacaoSeries2020-2.txt", espectadores, seriesHash);
+
+      long toc = System.nanoTime();
+      System.out.println("Tempo de carregamento = " + (toc - tic) / 1000000000 + " segundos");
+
+
+
 
 
       //System.out.println("Séries Tabela Hash:");
