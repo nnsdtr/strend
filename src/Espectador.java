@@ -13,7 +13,7 @@ public class Espectador {
       this.nome = "";
       this.login = "";
       this.senha = "";
-      this.avaliacao = null;
+      this.avaliacao = new EspecAvalLista();
    }
 
    public String toString(){
@@ -33,4 +33,28 @@ public class Espectador {
       return this.cpf.compareTo(cpf);
    }
 
+
+
+
+
+
+
+
+   /**
+    * APENAS PARA TESTE [DELETAR DEPOIS]
+    * @return string. Todas as avaliações realizadas pelo espectador.
+    */
+   public String toStringAvaliacoes() {
+      if (avaliacao.vazia())
+         return "Não há avaliações para esse usuário\n";
+      else {
+         String impressao = "";
+         EspecAvalLista.Elemento aux = avaliacao.sentinela.prox;
+         while (aux != null) {
+            impressao += aux.serie.nome + " [Nota: " + aux.serie.nota + "]\n";
+            aux = aux.prox;
+         }
+         return impressao;
+      }
+   }
 }
