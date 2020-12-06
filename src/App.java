@@ -7,12 +7,15 @@ import java.util.Scanner;
 
 
 public class App {
+
+   // Grupo de Globais
    private static HashSeries seriesHash = new HashSeries();
 
    private static AvlSeriesLancadas seriesLancadas = new AvlSeriesLancadas();
 
    private static final DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 
+   // Grupo de carregamento
    public static AvlEspec carregarEspectadores(String caminho) throws FileNotFoundException {
       Scanner leitorArq = new Scanner(new File(caminho));
       AvlEspec arvore = new AvlEspec();
@@ -66,21 +69,6 @@ public class App {
       leitorArqHash.close();
       return seriesHash;
    }
-   public  static Espectador login(String cpf, String senha, AvlEspec avl){
-      Espectador esp = new Espectador();
-      esp = avl.localizar(cpf);
-      if (esp == null){
-         return null;
-      }else
-      {
-         if(esp.senha.equals(senha)){
-            return esp;
-         }
-         else{
-            return null;
-         }
-      }
-   }
 
    public static void carregarAvaliacoes(String caminho, AvlEspec avlEspec, HashSeries hashSeries) throws FileNotFoundException {
       Scanner leitorArqAval = new Scanner(new File(caminho));
@@ -106,6 +94,8 @@ public class App {
       leitorArqAval.close();
    }
 
+
+   // Busca para data
    public static void buscaData(String dataPesquisada) {
       AvlSeriesLancadas.Nodo listaLocalizada = seriesLancadas.localizar(seriesLancadas.raiz, dataPesquisada);
       System.out.println("Busca realizada na data " + dataPesquisada + ": ");
@@ -114,6 +104,19 @@ public class App {
       }
       else {
          listaLocalizada.meuDado.imprimir();
+      }
+   }
+
+
+   // Métodos de Login
+   public  static Espectador login(String cpf, String senha, AvlEspec avl) {
+      Espectador esp;
+      esp = avl.localizar(cpf);
+      if (esp == null)
+         return null;
+      else {
+         if(esp.senha.equals(senha)) return esp;
+         else return null;
       }
    }
 
@@ -131,8 +134,7 @@ public class App {
 
 
    public static void main(String[] args) throws FileNotFoundException {
-      Scanner ler = new Scanner(System.in);
-
+      // Marcação de tempo para carregamento
       long tic = System.nanoTime();
 
       // Teste da AVL de Espectadores
@@ -147,30 +149,32 @@ public class App {
       // Teste de carregamento das Avaliações
       carregarAvaliacoes("dados2AvaliacaoSeries2020-2.txt", espectadores, seriesHash);
 
+      // Fim do cálculo de tempo para carregamento
       long toc = System.nanoTime();
       System.out.println("Tempo de carregamento = " + (toc - tic) / 1000000000 + " segundos");
 
 
-      Boolean menu = false;
-      do{
+      // Teste de login
+      Scanner ler = new Scanner(System.in);
+
+      boolean menu;
+      do {
          MenuLogin();
-         String cpf = "";
-         String senha = "";
-         cpf = ler.nextLine();
-         senha = ler.nextLine();
+         String cpf = ler.nextLine();
+         String senha = ler.nextLine();
          Espectador localizado = login(cpf, senha, espectadores);
-         if(localizado == null){
+         if (localizado == null){
             menu = false;
-            System.out.println("Usuario ou Senha incorretos");
+            System.out.println("Usuário ou senha incorretos!");
          }
-         else{
+         else {
             menu = true;
             System.out.println(localizado.toString());
             System.out.println(localizado.toStringAvaliacoes());
-
          }
-      }while (menu == false);
+      } while (!menu);
       System.out.println("chegou");
+      ler.close();
 
 
 
