@@ -13,6 +13,10 @@ public class EspecAvalLista {
          String comp = (String) obj;
          return this.nome.equals(comp);
       }
+
+      public String toString() {
+         return "[Nota: " + this.nota + "] " + this.nome + "\n";
+      }
    }
 
    public static class Elemento {
@@ -27,14 +31,20 @@ public class EspecAvalLista {
 
    public Elemento sentinela;
    public Elemento ultima;
+   public int numElemementos;
 
    public EspecAvalLista() {
       this.sentinela = new Elemento(null);
       this.ultima = sentinela;
+      this.numElemementos = 0;
    }
 
    public boolean vazia() {
       return ultima == sentinela;
+   }
+
+   public int getTamanho() {
+      return this.numElemementos;
    }
 
    public void inserir(String nome, int nota) {
@@ -42,6 +52,7 @@ public class EspecAvalLista {
 
       ultima.prox = novo;
       ultima = novo;
+      numElemementos++;
    }
 
    public Serie remover(String nome) {
@@ -54,6 +65,8 @@ public class EspecAvalLista {
 
             if (retirada == ultima) ultima = aux;
             else retirada.prox = null;
+
+            numElemementos--;
 
             return retirada.serie;
          }
