@@ -66,6 +66,21 @@ public class App {
       leitorArqHash.close();
       return seriesHash;
    }
+   public  static Espectador login(String cpf, String senha, AvlEspec avl){
+      Espectador esp = new Espectador();
+      esp = avl.localizar(cpf);
+      if (esp == null){
+         return null;
+      }else
+      {
+         if(esp.senha.equals(senha)){
+            return esp;
+         }
+         else{
+            return null;
+         }
+      }
+   }
 
    public static void carregarAvaliacoes(String caminho, AvlEspec avlEspec, HashSeries hashSeries) throws FileNotFoundException {
       Scanner leitorArqAval = new Scanner(new File(caminho));
@@ -102,7 +117,21 @@ public class App {
       }
    }
 
+   public static void MenuLogin() {
+      System.out.println("                           Strend ###");
+      System.out.println("\n                  =========================");
+      System.out.println("                  |         STREND        |");
+      System.out.println("                  |                       |");
+      System.out.println("                  |    Informe o CPF:     |");
+      System.out.println("                  |    Informe a Senha:   |");
+      System.out.println("                  |                       |");
+      System.out.println("                  =========================\n");
+
+   }
+
+
    public static void main(String[] args) throws FileNotFoundException {
+      Scanner ler = new Scanner(System.in);
 
       long tic = System.nanoTime();
 
@@ -122,6 +151,26 @@ public class App {
       System.out.println("Tempo de carregamento = " + (toc - tic) / 1000000000 + " segundos");
 
 
+      Boolean menu = false;
+      do{
+         MenuLogin();
+         String cpf = "";
+         String senha = "";
+         cpf = ler.nextLine();
+         senha = ler.nextLine();
+         Espectador localizado = login(cpf, senha, espectadores);
+         if(localizado == null){
+            menu = false;
+            System.out.println("Usuario ou Senha incorretos");
+         }
+         else{
+            menu = true;
+            System.out.println(localizado.toString());
+            System.out.println(localizado.toStringAvaliacoes());
+
+         }
+      }while (menu == false);
+      System.out.println("chegou");
 
 
 
