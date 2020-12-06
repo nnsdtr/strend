@@ -177,10 +177,6 @@ public class App {
       ler.close();
 
 
-
-      //System.out.println("Séries Tabela Hash:");
-      //seriesHash.imprimir();
-
       // Teste da localização de Espectador por CPF
       Espectador localizado = espectadores.localizar("369382373-63");
       System.out.println(localizado.toString());
@@ -192,16 +188,6 @@ public class App {
       System.out.println("Soma das notas: " + localizada.somaNotasValidas);
       System.out.println("Qtd de notas: " + localizada.qtdNotasValidas);
       System.out.println("Média das notas: " + localizada.somaNotasValidas / (float) localizada.qtdNotasValidas );
-
-
-      // Teste da remoção por nome
-      //Series removida = seriesHash.remover("Breaking Bad");
-      //System.out.println("\nSérie removida: \n" + removida.toString() + "\n");
-
-      //System.out.println("Séries Tabela Hash (Atualizada):");
-      //seriesHash.imprimir();
-      //System.out.println("\n");
-
 
       //Teste da localização de Série por data
       buscaData("17/07/1997"); // Não existe
