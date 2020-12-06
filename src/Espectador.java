@@ -34,27 +34,27 @@ public class Espectador {
    }
 
 
-
-
-
-
-
-
-   /**
-    * APENAS PARA TESTE [DELETAR DEPOIS]
-    * @return string. Todas as avaliações realizadas pelo espectador.
-    */
-   public String toStringAvaliacoes() {
+   public String toStringAval() {
       if (avaliacao.vazia())
-         return "Não há avaliações para esse usuário\n";
+         return "Histórico de avaliações:\nNão há avaliações ainda! =(\n";
       else {
-         String impressao = "";
+         EspecAvalLista.Serie[] vetor = new EspecAvalLista.Serie[ avaliacao.getTamanho() ];
          EspecAvalLista.Elemento aux = avaliacao.sentinela.prox;
+
+         int pos = 0;
          while (aux != null) {
-            impressao += aux.serie.nome + " [Nota: " + aux.serie.nota + "]\n";
+            vetor[pos++] = aux.serie;
             aux = aux.prox;
          }
-         return impressao;
+
+         MergeSort.ordenacao(vetor);
+
+         String imprimir = "Histórico de avaliações:\n";
+         for (int i=0; i < vetor.length; i++) {
+            imprimir += vetor[i].toString();
+         }
+
+         return imprimir;
       }
    }
 }
