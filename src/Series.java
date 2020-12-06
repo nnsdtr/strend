@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 
 public class Series {
@@ -32,5 +33,17 @@ public class Series {
 
    public String toString(){
       return "Nome: " + nome + " - Data de Lançamento: " + dataDeLancamento + " - Nº de episódios: " + numeroTotalEpisodios + "\n";
+   }
+
+   /**
+    * Calcula nota média conquistada por uma Série
+    * @return float. Nota média.
+    */
+   public String notaMedia() {
+      DecimalFormat df = new DecimalFormat("#.##");
+      if (this.qtdNotasValidas == 0)
+         return "-";
+      else
+         return df.format( this.somaNotasValidas / (float) this.qtdNotasValidas );
    }
 }
