@@ -12,13 +12,13 @@ public class HashSeries {
       }
    }
 
-   private final int tamanho;
+   private final int capacidade;
    private final ElemSerie[] vetorSeries;
    private final Integer[] vetorPesos;
 
    public HashSeries() {
-      this.tamanho = 1511;
-      this.vetorSeries = new ElemSerie[tamanho];
+      this.capacidade = 1511;
+      this.vetorSeries = new ElemSerie[capacidade];
       this.vetorPesos = vetorPesos(150);
    }
 
@@ -34,19 +34,19 @@ public class HashSeries {
 
    public int funcaoHash(String chave) {
       int soma = 0;
+
       for (int i=0; i < chave.length(); i++) {
          int charNum = chave.charAt(i);
          soma += charNum * this.vetorPesos[i];
       }
-
-      return soma % this.tamanho;
+      return soma % this.capacidade;
    }
 
    public void inserir(Series novaSerie) {
       int pos = funcaoHash(novaSerie.nome);
 
       while (this.vetorSeries[pos] != null && !this.vetorSeries[pos].removido)
-         pos++;
+         pos = (pos + 1) % this.capacidade;
 
       this.vetorSeries[pos] = new ElemSerie(novaSerie);
    }
@@ -55,9 +55,8 @@ public class HashSeries {
       int pos = funcaoHash(nome);
 
       while (!this.vetorSeries[pos].meuDado.equals(nome)) {
-         pos++;
-         if (pos > this.tamanho || this.vetorSeries[pos] == null)
-            return null;
+         pos = (pos + 1) % this.capacidade;
+         if (this.vetorSeries[pos] == null) return null;
       }
       return this.vetorSeries[pos].meuDado;
    }
@@ -66,9 +65,8 @@ public class HashSeries {
       int pos = funcaoHash(nome);
 
       while (!this.vetorSeries[pos].meuDado.equals(nome)) {
-         pos++;
-         if (pos > this.tamanho || this.vetorSeries[pos] == null)
-            return null;
+         pos = (pos + 1) % this.capacidade;
+         if (this.vetorSeries[pos] == null) return null;
       }
 
       this.vetorSeries[pos].removido = true;
