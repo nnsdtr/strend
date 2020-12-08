@@ -49,12 +49,12 @@ public class Espectador {
 
          MergeSort.ordenacao(vetor);
 
-         String imprimir = "Histórico de avaliações:\n";
-         for (int i=0; i < vetor.length; i++) {
-            imprimir += vetor[i].toString();
+         StringBuilder imprimir = new StringBuilder("Histórico de avaliações:\n");
+         for (EspecAvalLista.Serie serie : vetor) {
+            imprimir.append( serie.toString() );
          }
 
-         return imprimir;
+         return imprimir.toString();
       }
    }
 }
