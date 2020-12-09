@@ -197,18 +197,19 @@ public class App {
          System.out.println("Digite o nome da série: ");
          String serie = lerSerie.nextLine();
          Series localizada = seriesHash.localizar(serie);
+
          if (localizada == null) {
             System.out.println("Série não encontrada");
          } else {
             System.out.println("\nSérie localizada: \n" + localizada.toString());
-            System.out.println("Média das notas: " +localizada.notaMedia());
+            System.out.println("Média das notas: " + localizada.notaMedia());
             System.out.println(localizada.qtdNotasValidas + "Usuários avaliaram") ;
          }
 
          MenuSeries(espectadores,esp,logado);
       }
 
-      else if (escolhaSeries == 3){
+      else if (escolhaSeries == 3) {
          MenuPesquisas(espectadores,esp, logado);
       }
 
@@ -228,14 +229,20 @@ public class App {
       System.out.println("3- Voltar");
       System.out.print("Digite a opção: ");
       opcao2 = ler.nextInt();
-      String cpf = "";
+      String cpf;
 
       if (opcao2 == 1) {
          Scanner ler2 = new Scanner(System.in);
          System.out.println("Pesquisa CPF: ");
          cpf = ler2.nextLine();
          Espectador esp1 = espectadores.localizar(cpf);
-         MenuEspec(esp1, espectadores, localizado);
+
+         if (esp1 == null) {
+            System.out.println("Espectador não localizado! Tente novamente.\n\n\n");
+            MenuPesquisas(espectadores, esp, localizado);
+         } else {
+            MenuEspec(esp1, espectadores, localizado);
+         }
       }
       else if (opcao2 == 2) {
          MenuSeries(espectadores, esp, localizado);
