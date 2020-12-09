@@ -215,8 +215,7 @@ public class App {
    }
 
    public static void  MenuPesquisas(AvlEspec espectadores, Espectador esp, Espectador localizado) {
-
-      int opcao2 = 0;
+      int opcao2;
       Scanner ler = new Scanner(System.in);
 
       System.out.println("Pesquisas disponíveis");
@@ -226,45 +225,50 @@ public class App {
       System.out.print("Digite a opção: ");
       opcao2 = ler.nextInt();
       String cpf = "";
+
       if (opcao2 == 1) {
          Scanner ler2 = new Scanner(System.in);
          System.out.println("Pesquisa CPF: ");
          cpf = ler2.nextLine();
          Espectador esp1 = espectadores.localizar(cpf);
          MenuEspec(esp1, espectadores, localizado);
-
       }
-      if(opcao2 == 2){
+      else if (opcao2 == 2) {
          MenuSeries(espectadores, esp, localizado);
-
       }
-      if(opcao2 == 3){
+      else if (opcao2 == 3) {
          MenuPrincipal(esp,espectadores,localizado);
+      }
+      else {
+         System.out.println("Opção inválida! Tente novamente.\n\n\n");
+         MenuPesquisas(espectadores, esp, localizado);
       }
    }
 
    public static void MenuEspec(Espectador esp, AvlEspec espectadores, Espectador localizado) {
-
-      int opcao = 0;
+      int opcao;
       Scanner ler = new Scanner(System.in);
-      System.out.println("Você está na página de" + esp.nome +  "");
+      System.out.println("Você está na página de " + esp.nome + "!");
       System.out.println("1- Dados do Espectador");
       System.out.println("2- Histórico de avaliações");
       System.out.println("3- Voltar");
       System.out.print("Digite a opção: ");
       opcao = ler.nextInt();
 
-
-      if(opcao ==1){
+      if (opcao==1) {
          ImprimirEspectador(espectadores, esp);
          MenuEspec(esp, espectadores, localizado);
       }
-      if(opcao ==2) {
+      else if (opcao==2) {
          ImprimirHistorioAvaliacao(esp);
          MenuEspec(esp, espectadores, localizado);
       }
-      if(opcao ==3){
+      else if (opcao==3) {
          MenuPesquisas(espectadores, esp, localizado);
+      }
+      else {
+         System.out.println("Opção inválida! Tente novamente.\n\n\n");
+         MenuEspec(esp, espectadores, localizado);
       }
    }
 
