@@ -169,7 +169,7 @@ public class App {
    }
 
    public static void MenuSeries(AvlEspec espectadores, Espectador esp, Espectador logado){
-      int escolhaSeries = 0;
+      int escolhaSeries;
       Scanner ler2 = new Scanner(System.in);
       System.out.println("Pesquisa por series");
       System.out.println("1- Séries Lançadas em uma data");
@@ -179,7 +179,7 @@ public class App {
 
       escolhaSeries = ler2.nextInt();
 
-      if(escolhaSeries == 1){
+      if (escolhaSeries == 1) {
          Scanner lerData = new Scanner(System.in);
          System.out.println("Digite uma data para pesquisar no formato dia/mes/ano");
          String data = lerData.nextLine();
@@ -187,18 +187,30 @@ public class App {
          buscaData(data);
          MenuSeries(espectadores,esp,logado);
       }
-      if(escolhaSeries == 2){
+
+      else if (escolhaSeries == 2) {
          Scanner lerSerie = new Scanner(System.in);
          System.out.println("Digite o nome da série: ");
          String serie = lerSerie.nextLine();
          Series localizada = seriesHash.localizar(serie);
-         System.out.println("\nSérie localizada: \n" + localizada.toString());
-         System.out.println("Média das notas: " +localizada.notaMedia());
-         System.out.println(localizada.qtdNotasValidas + "Usuários avaliaram") ;
+         if (localizada == null) {
+            System.out.println("Série não encontrada");
+         } else {
+            System.out.println("\nSérie localizada: \n" + localizada.toString());
+            System.out.println("Média das notas: " +localizada.notaMedia());
+            System.out.println(localizada.qtdNotasValidas + "Usuários avaliaram") ;
+         }
+
          MenuSeries(espectadores,esp,logado);
       }
-      if(escolhaSeries == 3){
+
+      else if (escolhaSeries == 3){
          MenuPesquisas(espectadores,esp, logado);
+      }
+
+      else {
+         System.out.println("Opção inválida! Tente novamente.\n\n\n");
+         MenuSeries(espectadores,esp,logado);
       }
    }
 
