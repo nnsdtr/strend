@@ -17,7 +17,7 @@ public class Espectador {
    }
 
    public String toString(){
-      return "CPF: " + cpf + " - Nome: " + nome + " - Login: " + login + "\n";
+      return "CPF: " + cpf + "\nNome: " + nome + "\nLogin: " + login + "\n";
    }
 
    public boolean equals(Object obj) {
