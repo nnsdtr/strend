@@ -120,16 +120,151 @@ public class App {
       }
    }
 
-   public static void MenuLogin() {
-      System.out.println("                           Strend ###");
-      System.out.println("\n                  =========================");
-      System.out.println("                  |         STREND        |");
-      System.out.println("                  |                       |");
-      System.out.println("                  |    Informe o CPF:     |");
-      System.out.println("                  |    Informe a Senha:   |");
-      System.out.println("                  |                       |");
-      System.out.println("                  =========================\n");
+   public static String [] MenuLogin() {
 
+      String[] dados = new String[2];
+      Scanner ler = new Scanner(System.in);
+      String cpf = "";
+      String senha = "";
+
+      System.out.println("                                   STREND             ");
+      System.out.print("                         Informe o CPF:");cpf = ler.next();
+      System.out.print("                         Informe a Senha:");senha = ler.next();
+      dados[0] = cpf;
+      dados[1] = senha;
+      return dados;
+   }
+
+   public static int MenuPrincipal(Espectador esp, AvlEspec espectadores, Espectador localizado) {
+
+      int opcao = 0;
+      Scanner ler = new Scanner(System.in);
+
+      System.out.println("                       Olá," + localizado.nome +                       "!");
+      System.out.println("                                                              ");
+      System.out.println("                          Opções:                             ");
+      System.out.println("                                                              ");
+      System.out.println("                    1- Mostrar meus Dados                     ");
+      System.out.println("                    2- Pesquisar meu histórico de avaliações  ");
+      System.out.println("                    3- Pesquisas                              ");
+      System.out.println("                                                              ");
+      System.out.print("                         Digite a opção:                        ");opcao = ler.nextInt();
+
+      MenuPrincipalCase(opcao,espectadores,localizado);
+      return opcao;
+   }
+
+   public static  void MenuPrincipalCase(int opcao, AvlEspec espectadores, Espectador localizado){
+      if (opcao == 1) { //opcao de mostrar os dados do espectador
+         System.out.println(localizado.toString());
+         MenuPrincipal(localizado,espectadores,localizado);
+
+      }
+      if (opcao == 2) { //opcao de mostrar historico de avaliacoes do espectador
+         String historicoAval = localizado.toStringAval();
+         System.out.println(historicoAval);
+         MenuPrincipal(localizado,espectadores,localizado);
+      }
+      if(opcao==3){
+         MenuPesquisas(espectadores, localizado, localizado);
+      }
+   }
+
+   public static void MenuSeries(AvlEspec espectadores, Espectador esp, Espectador logado){
+      int escolhaSeries = 0;
+      Scanner ler2 = new Scanner(System.in);
+      System.out.println("                 3) Pesquisa por series                   ");
+      System.out.println("                                                          ");
+      System.out.println("                1- Séries Lançadas em uma data            ");
+      System.out.println("                2- Nota Média de uma Séries               ");
+      System.out.println("                3- Voltar                                 ");
+      System.out.print("                   Digite a opção:                          ");
+
+      escolhaSeries = ler2.nextInt();
+
+      if(escolhaSeries == 1){
+         Scanner lerData = new Scanner(System.in);
+         System.out.println("Digite uma data para pesquisar no formato dia/mes/ano");
+         String data = lerData.nextLine();
+         System.out.println(data);
+         buscaData(data);
+         MenuSeries(espectadores,esp,logado);
+      }
+      if(escolhaSeries == 2){
+         Series localizada = seriesHash.localizar("The Walking Bubbles - Temporada 7");
+         System.out.println("\nSérie localizada: \n" + localizada.toString());
+         System.out.println("Soma das notas: " + localizada.somaNotasValidas);
+         System.out.println("Qtd de notas: " + localizada.qtdNotasValidas);
+         System.out.println("Média das notas: " + localizada.somaNotasValidas / (float) localizada.qtdNotasValidas );
+         MenuSeries(espectadores,esp,logado);
+      }
+      if(escolhaSeries == 3){
+         MenuPesquisas(espectadores,esp, logado);
+      }
+   }
+
+   public static void  MenuPesquisas(AvlEspec espectadores, Espectador esp, Espectador localizado) {
+
+      int opcao2 = 0;
+      Scanner ler = new Scanner(System.in);
+
+      System.out.println("                3) Pesquisas disponíveis   ");
+      System.out.println("                                           ");
+      System.out.println("                1- Espectador              ");
+      System.out.println("                2- Série                   ");
+      System.out.println("                3- Voltar                  ");
+      System.out.print("                   Digite a opção:           ");
+      opcao2 = ler.nextInt();
+      System.out.println("                                           ");
+      String cpf = "";
+      if (opcao2 == 1) {
+         Scanner ler2 = new Scanner(System.in);
+         System.out.println("Pesquisa CPF: ");
+         cpf = ler2.nextLine();
+         Espectador esp1 = espectadores.localizar(cpf);
+         MenuEspec(esp1, espectadores, localizado);
+
+      }
+      if(opcao2 == 2){
+         MenuSeries(espectadores, esp, localizado);
+
+      }
+      if(opcao2 == 3){
+         MenuPrincipal(esp,espectadores,localizado);
+      }
+   }
+
+   public static void MenuEspec(Espectador esp, AvlEspec espectadores, Espectador localizado) {
+
+      int opcao = 0;
+      Scanner ler = new Scanner(System.in);
+      System.out.println("                        Você está na página de" + esp.nome +  "");
+      System.out.println("                                                            ");
+      System.out.println("                    1- Dados do Espectador                  ");
+      System.out.println("                    2- Histórico de avaliações              ");
+      System.out.println("                    3- Voltar                               ");
+      System.out.print("                       Digite a opção:                        ");opcao = ler.nextInt();
+      System.out.println("                                                            ");
+
+      if(opcao ==1){
+         ImprimirEspectador(espectadores, esp);
+         MenuEspec(esp, espectadores, localizado);
+      }
+      if(opcao ==2) {
+         ImprimirHistorioAvaliacao(esp);
+         MenuEspec(esp, espectadores, localizado);
+      }
+      if(opcao ==3){
+         MenuPesquisas(espectadores, esp, localizado);
+      }
+   }
+
+   public static void ImprimirEspectador(AvlEspec espectadores, Espectador localizado) {
+      System.out.println(localizado.toString());
+   }
+   public static void ImprimirHistorioAvaliacao(Espectador esp) {
+      String historicoAval = esp.toStringAval();
+      System.out.println(historicoAval);
    }
 
 
@@ -155,43 +290,47 @@ public class App {
 
 
       // Teste de login
-      Scanner ler = new Scanner(System.in);
 
       boolean menu;
       do {
-         MenuLogin();
-         String cpf = ler.nextLine();
-         String senha = ler.nextLine();
-         Espectador localizado = login(cpf, senha, espectadores);
-         if (localizado == null){
+         String [] dados = new String [2];
+         dados = MenuLogin();
+         System.out.println(" ");
+         Espectador usuario_logado = login(dados[0], dados[1], espectadores);
+         if (usuario_logado == null){
             menu = false;
             System.out.println("Usuário ou senha incorretos!");
          }
          else {
             menu = true;
-            System.out.println(localizado.toString());
-            System.out.println(localizado.toStringAvaliacoes());
+            String cpf = null;
+            Espectador esp;
+            System.out.println(" ");
+            int opcao = MenuPrincipal(usuario_logado,espectadores, usuario_logado);
+            while (opcao >=1 && opcao <=3){
+               MenuPesquisas(espectadores,usuario_logado, usuario_logado);
+
+            }
          }
       } while (!menu);
-      System.out.println("chegou");
-      ler.close();
 
 
       // Teste da localização de Espectador por CPF
-      Espectador localizado = espectadores.localizar("369382373-63");
-      System.out.println(localizado.toString());
-      System.out.println(localizado.toStringAvaliacoes());
+      // Espectador localizado = espectadores.localizar("369382373-63");
+      //System.out.println(localizado.toString());
+      //System.out.println(localizado.toStringAval());
 
       // Teste da localização de Série por nome
-      Series localizada = seriesHash.localizar("The Walking Bubbles - Temporada 7");
-      System.out.println("\nSérie localizada: \n" + localizada.toString());
-      System.out.println("Soma das notas: " + localizada.somaNotasValidas);
-      System.out.println("Qtd de notas: " + localizada.qtdNotasValidas);
-      System.out.println("Média das notas: " + localizada.somaNotasValidas / (float) localizada.qtdNotasValidas );
+      //Series localizada = seriesHash.localizar("The Walking Bubbles - Temporada 7");
+      //System.out.println("\nSérie localizada: \n" + localizada.toString());
+      //System.out.println("Soma das notas: " + localizada.somaNotasValidas);
+      //System.out.println("Qtd de notas: " + localizada.qtdNotasValidas);
+      //System.out.println("Média das notas: " + localizada.somaNotasValidas / (float) localizada.qtdNotasValidas );
 
       //Teste da localização de Série por data
-      buscaData("17/07/1997"); // Não existe
-      buscaData("20/01/2018"); // Friends + Copia
+      //buscaData("17/07/1997"); // Não existe
+      //buscaData("20/01/2018"); // Friends + Copia
 
    }
-}
+
+   }
