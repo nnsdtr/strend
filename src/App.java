@@ -10,9 +10,7 @@ public class App {
 
    // Grupo de Globais
    private static HashSeries seriesHash = new HashSeries();
-
    private static AvlSeriesLancadas seriesLancadas = new AvlSeriesLancadas();
-
    private static final DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 
    // Grupo de carregamento
@@ -95,7 +93,7 @@ public class App {
    }
 
 
-   // Busca para data
+   // Busca de série para data
    public static void buscaData(String dataPesquisada) {
       AvlSeriesLancadas.Nodo listaLocalizada = seriesLancadas.localizar(seriesLancadas.raiz, dataPesquisada);
       System.out.println("Busca realizada na data " + dataPesquisada + ": ");
@@ -121,23 +119,25 @@ public class App {
    }
 
    public static String [] MenuLogin() {
-
       String[] dados = new String[2];
       Scanner ler = new Scanner(System.in);
       String cpf = "";
       String senha = "";
 
       System.out.println("STREND");
-      System.out.print("Informe o CPF: ");cpf = ler.next();
-      System.out.print("Informe a Senha: ");senha = ler.next();
+      System.out.print("Informe o CPF: ");
+      cpf = ler.next();
+      System.out.print("Informe a Senha: ");
+      senha = ler.next();
+
       dados[0] = cpf;
       dados[1] = senha;
+
       return dados;
    }
 
    public static int MenuPrincipal(Espectador esp, AvlEspec espectadores, Espectador localizado) {
-
-      int opcao = 0;
+      int opcao;
       Scanner ler = new Scanner(System.in);
 
       System.out.println("Olá, " + localizado.nome +"!\n");
@@ -157,14 +157,18 @@ public class App {
          System.out.println("\nMeus dados:\n"+localizado.toString()+"\n\n\n");
          MenuPrincipal(localizado,espectadores,localizado);
       }
-      if (opcao == 2) { //opcao de mostrar historico de avaliacoes do espectador
+      else if (opcao == 2) { //opcao de mostrar historico de avaliacoes do espectador
          String historicoAval = localizado.toStringAval();
          System.out.println("\n"+historicoAval+"\n\n\n");
          MenuPrincipal(localizado,espectadores,localizado);
       }
-      if(opcao==3){
+      else if(opcao==3) {
          System.out.println("\n\n\n");
          MenuPesquisas(espectadores, localizado, localizado);
+      }
+      else {
+         System.out.println("Opção inválida! Tente novamente.\n\n\n");
+         MenuPrincipal(localizado,espectadores,localizado);
       }
    }
 
@@ -256,7 +260,7 @@ public class App {
       opcao = ler.nextInt();
 
       if (opcao==1) {
-         ImprimirEspectador(espectadores, esp);
+         ImprimirEspectador(esp);
          MenuEspec(esp, espectadores, localizado);
       }
       else if (opcao==2) {
@@ -272,9 +276,10 @@ public class App {
       }
    }
 
-   public static void ImprimirEspectador(AvlEspec espectadores, Espectador localizado) {
+   public static void ImprimirEspectador(Espectador localizado) {
       System.out.println(localizado.toString());
    }
+
    public static void ImprimirHistorioAvaliacao(Espectador esp) {
       String historicoAval = esp.toStringAval();
       System.out.println(historicoAval);
@@ -306,13 +311,13 @@ public class App {
 
       boolean menu;
       do {
-         String [] dados = new String [2];
+         String[] dados = new String[2];
          dados = MenuLogin();
          System.out.println(" ");
          Espectador usuario_logado = login(dados[0], dados[1], espectadores);
          if (usuario_logado == null){
             menu = false;
-            System.out.println("Usuário ou senha incorretos!");
+            System.out.println("Usuário ou senha incorretos!\n\n\n");
          }
          else {
             menu = true;
@@ -322,28 +327,8 @@ public class App {
             int opcao = MenuPrincipal(usuario_logado,espectadores, usuario_logado);
             while (opcao >=1 && opcao <=3){
                MenuPesquisas(espectadores,usuario_logado, usuario_logado);
-
             }
          }
       } while (!menu);
-
-
-      // Teste da localização de Espectador por CPF
-      // Espectador localizado = espectadores.localizar("369382373-63");
-      //System.out.println(localizado.toString());
-      //System.out.println(localizado.toStringAval());
-
-      // Teste da localização de Série por nome
-      //Series localizada = seriesHash.localizar("The Walking Bubbles - Temporada 7");
-      //System.out.println("\nSérie localizada: \n" + localizada.toString());
-      //System.out.println("Soma das notas: " + localizada.somaNotasValidas);
-      //System.out.println("Qtd de notas: " + localizada.qtdNotasValidas);
-      //System.out.println("Média das notas: " + localizada.somaNotasValidas / (float) localizada.qtdNotasValidas );
-
-      //Teste da localização de Série por data
-      //buscaData("17/07/1997"); // Não existe
-      //buscaData("20/01/2018"); // Friends + Copia
-
    }
-
-   }
+}
