@@ -17,7 +17,7 @@ public class Espectador {
    }
 
    public String toString(){
-      return "CPF: " + cpf + "\nNome: " + nome + "\nLogin: " + login + "\n";
+      return "\nCPF: " + cpf + "\nNome: " + nome + "\nLogin: " + login + "\n";
    }
 
    public boolean equals(Object obj) {
@@ -36,7 +36,7 @@ public class Espectador {
 
    public String toStringAval() {
       if (avaliacao.vazia())
-         return "Histórico de avaliações:\nNão há avaliações ainda! =(\n";
+         return "Histórico de avaliações:\n\nNão há avaliações ainda! =(\n";
       else {
          EspecAvalLista.Serie[] vetor = new EspecAvalLista.Serie[ avaliacao.getTamanho() ];
          EspecAvalLista.Elemento aux = avaliacao.sentinela.prox;

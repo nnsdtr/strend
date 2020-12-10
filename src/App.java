@@ -124,7 +124,7 @@ public class App {
       String cpf = "";
       String senha = "";
 
-      System.out.println("STREND");
+      System.out.println("___________________________________\n\nSTREND - Login");
       System.out.print("Informe o CPF: ");
       cpf = ler.next();
       System.out.print("Informe a Senha: ");
@@ -140,12 +140,12 @@ public class App {
       int opcao;
       Scanner ler = new Scanner(System.in);
 
-      System.out.println("Olá, " + localizado.nome +"!\n");
+      System.out.println("___________________________________\n\nOlá, " + localizado.nome +"!\n");
       System.out.println("Opções:");
       System.out.println("1- Mostrar meus Dados");
       System.out.println("2- Pesquisar meu histórico de avaliações");
       System.out.println("3- Pesquisas");
-      System.out.print("Digite a opção: ");
+      System.out.print("\nDigite a opção: ");
       opcao = ler.nextInt();
 
       MenuPrincipalCase(opcao,espectadores,localizado);
@@ -154,20 +154,20 @@ public class App {
 
    public static  void MenuPrincipalCase(int opcao, AvlEspec espectadores, Espectador localizado){
       if (opcao == 1) { //opcao de mostrar os dados do espectador
-         System.out.println("\nMeus dados:\n"+localizado.toString()+"\n\n\n");
+         System.out.println("\nMeus dados:\n\n"+localizado.toString());
          MenuPrincipal(localizado,espectadores,localizado);
       }
       else if (opcao == 2) { //opcao de mostrar historico de avaliacoes do espectador
          String historicoAval = localizado.toStringAval();
-         System.out.println("\n"+historicoAval+"\n\n\n");
+         System.out.println("\n"+historicoAval+"\n");
          MenuPrincipal(localizado,espectadores,localizado);
       }
       else if(opcao==3) {
-         System.out.println("\n\n\n");
+         System.out.println("\n");
          MenuPesquisas(espectadores, localizado, localizado);
       }
       else {
-         System.out.println("Opção inválida! Tente novamente.\n\n\n");
+         System.out.println("\nOpção inválida! Tente novamente.\n");
          MenuPrincipal(localizado,espectadores,localizado);
       }
    }
@@ -175,26 +175,31 @@ public class App {
    public static void MenuSeries(AvlEspec espectadores, Espectador esp, Espectador logado){
       int escolhaSeries;
       Scanner ler2 = new Scanner(System.in);
-      System.out.println("Pesquisa por series");
+      System.out.println("___________________________________\n\nPesquisa por series:\n");
       System.out.println("1- Séries Lançadas em uma data");
       System.out.println("2- Nota Média de uma Séries");
       System.out.println("3- Voltar");
-      System.out.print("Digite a opção: ");
+      System.out.print("\nDigite a opção: ");
 
       escolhaSeries = ler2.nextInt();
 
       if (escolhaSeries == 1) {
          Scanner lerData = new Scanner(System.in);
-         System.out.println("Digite uma data para pesquisar no formato dia/mes/ano");
+         System.out.print("\nDigite uma data (dd/mm/aaaa): ");
          String data = lerData.nextLine();
-         System.out.println(data);
-         buscaData(data);
-         MenuSeries(espectadores,esp,logado);
+         if (!data.matches("[0-9]{2}/[0-9]{2}/[0-9]{4}")){
+            System.out.println("\nFormato de data inválido.\n");
+            MenuSeries(espectadores, esp, logado);
+         }
+         else {
+            buscaData(data);
+            MenuSeries(espectadores, esp, logado);
+         }
       }
 
       else if (escolhaSeries == 2) {
          Scanner lerSerie = new Scanner(System.in);
-         System.out.println("Digite o nome da série: ");
+         System.out.print("\nDigite o nome da série: ");
          String serie = lerSerie.nextLine();
          Series localizada = seriesHash.localizar(serie);
 
@@ -203,7 +208,7 @@ public class App {
          } else {
             System.out.println("\nSérie localizada: \n" + localizada.toString());
             System.out.println("Média das notas: " + localizada.notaMedia());
-            System.out.println(localizada.qtdNotasValidas + "Usuários avaliaram") ;
+            System.out.println(localizada.qtdNotasValidas + " usuários avaliaram") ;
          }
 
          MenuSeries(espectadores,esp,logado);
@@ -214,7 +219,7 @@ public class App {
       }
 
       else {
-         System.out.println("Opção inválida! Tente novamente.\n\n\n");
+         System.out.println("\nOpção inválida! Tente novamente.\n");
          MenuSeries(espectadores,esp,logado);
       }
    }
@@ -223,22 +228,22 @@ public class App {
       int opcao2;
       Scanner ler = new Scanner(System.in);
 
-      System.out.println("Pesquisas disponíveis");
+      System.out.println("___________________________________\n\nPesquisas disponíveis:");
       System.out.println("1- Espectador");
       System.out.println("2- Série");
       System.out.println("3- Voltar");
-      System.out.print("Digite a opção: ");
+      System.out.print("\nDigite a opção: ");
       opcao2 = ler.nextInt();
       String cpf;
 
       if (opcao2 == 1) {
          Scanner ler2 = new Scanner(System.in);
-         System.out.println("Pesquisa CPF: ");
+         System.out.print("\nInsira o CPF do Espectador: ");
          cpf = ler2.nextLine();
          Espectador esp1 = espectadores.localizar(cpf);
 
          if (esp1 == null) {
-            System.out.println("Espectador não localizado! Tente novamente.\n\n\n");
+            System.out.println("\nEspectador não localizado! Tente novamente.\n");
             MenuPesquisas(espectadores, esp, localizado);
          } else {
             MenuEspec(esp1, espectadores, localizado);
@@ -251,7 +256,7 @@ public class App {
          MenuPrincipal(esp,espectadores,localizado);
       }
       else {
-         System.out.println("Opção inválida! Tente novamente.\n\n\n");
+         System.out.println("\nOpção inválida! Tente novamente.\n");
          MenuPesquisas(espectadores, esp, localizado);
       }
    }
@@ -259,11 +264,11 @@ public class App {
    public static void MenuEspec(Espectador esp, AvlEspec espectadores, Espectador localizado) {
       int opcao;
       Scanner ler = new Scanner(System.in);
-      System.out.println("Você está na página de " + esp.nome + "!");
+      System.out.println("___________________________________\n\nVocê está na página de " + esp.nome + "!\n");
       System.out.println("1- Dados do Espectador");
       System.out.println("2- Histórico de avaliações");
       System.out.println("3- Voltar");
-      System.out.print("Digite a opção: ");
+      System.out.print("\nDigite a opção: ");
       opcao = ler.nextInt();
 
       if (opcao==1) {
@@ -278,7 +283,7 @@ public class App {
          MenuPesquisas(espectadores, esp, localizado);
       }
       else {
-         System.out.println("Opção inválida! Tente novamente.\n\n\n");
+         System.out.println("\nOpção inválida! Tente novamente.\n");
          MenuEspec(esp, espectadores, localizado);
       }
    }
@@ -311,7 +316,7 @@ public class App {
 
       // Fim do cálculo de tempo para carregamento
       long toc = System.nanoTime();
-      System.out.println("Tempo de carregamento = " + (toc - tic) / 1000000000 + " segundos\n");
+      System.out.println("\nTempo de carregamento = " + (toc - tic) / 1000000000 + " segundos\n");
 
 
       // Teste de login
@@ -324,7 +329,7 @@ public class App {
          Espectador usuario_logado = login(dados[0], dados[1], espectadores);
          if (usuario_logado == null){
             menu = false;
-            System.out.println("Usuário ou senha incorretos!\n\n\n");
+            System.out.println("Usuário ou senha incorretos!\n");
          }
          else {
             menu = true;
