@@ -1,3 +1,6 @@
+/**
+ * Método de ordenação empregado no Histórico de Avaliações do Espectador.
+ */
 public class MergeSort {
 
    /**

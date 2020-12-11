@@ -8,12 +8,19 @@ import java.util.Scanner;
 
 public class App {
 
-   // Grupo de Globais
+   // GRUPO DE GLOBAIS
    private static HashSeries seriesHash = new HashSeries();
    private static AvlSeriesLancadas seriesLancadas = new AvlSeriesLancadas();
    private static final DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 
-   // Grupo de carregamento
+
+   // GRUPO DE CARREGAMENTO
+   /**
+    * Carregamento da AVL de Espectadores
+    * @param caminho String. Caminho do arquivo.
+    * @return AVL carregada.
+    * @throws FileNotFoundException
+    */
    public static AvlEspec carregarEspectadores(String caminho) throws FileNotFoundException {
       Scanner leitorArq = new Scanner(new File(caminho));
       AvlEspec arvore = new AvlEspec();
@@ -33,6 +40,12 @@ public class App {
       return arvore;
    }
 
+   /**
+    * Carregamento Da AVL de Séries Lançadas em mesma data
+    * @param caminho String. Caminho do arquivo.
+    * @return AVL carregada.
+    * @throws FileNotFoundException
+    */
    public static AvlSeriesLancadas carregarSeriesLancadas (String caminho) throws FileNotFoundException {
       Scanner leitorArqAVL = new Scanner(new File(caminho));
 
@@ -50,6 +63,12 @@ public class App {
       return seriesLancadas;
    }
 
+   /**
+    * Carregamento da Tabela Hash de Séries
+    * @param caminho String. Caminho do arquivo.
+    * @return Tabela Hash carregada.
+    * @throws FileNotFoundException
+    */
    public static HashSeries carregarSeries(String caminho) throws FileNotFoundException {
       Scanner leitorArqHash = new Scanner(new File(caminho));
       DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
@@ -68,6 +87,13 @@ public class App {
       return seriesHash;
    }
 
+   /**
+    * Carregamento de dados de avaliações na AVL de Espectadores e Tabela Hash das Séries
+    * @param caminho String. Caminho do arquivo.
+    * @param avlEspec AVL de Espectadores.
+    * @param hashSeries Tabela Hash das Séries.
+    * @throws FileNotFoundException
+    */
    public static void carregarAvaliacoes(String caminho, AvlEspec avlEspec, HashSeries hashSeries) throws FileNotFoundException {
       Scanner leitorArqAval = new Scanner(new File(caminho));
 
@@ -93,20 +119,14 @@ public class App {
    }
 
 
-   // Busca de série para data
-   public static void buscaData(String dataPesquisada) {
-      AvlSeriesLancadas.Nodo listaLocalizada = seriesLancadas.localizar(seriesLancadas.raiz, dataPesquisada);
-      System.out.println("Busca realizada na data " + dataPesquisada + ": ");
-      if (listaLocalizada == null){
-         System.out.println("Não existem séries lançadas nessa data.\n");
-      }
-      else {
-         listaLocalizada.meuDado.imprimir();
-      }
-   }
-
-
-   // Métodos de Login
+   // GRUPO DE MÉTODOS DA INTERFACE DA PLATAFORMA
+   /**
+    * Método de login do usuário espectador
+    * @param cpf String. CPF do usuário.
+    * @param senha String. Senha do usuário.
+    * @param avl AVL dos Espectadores.
+    * @return Objeto Espectador encontrado. Null se não for encontrado.
+    */
    public  static Espectador login(String cpf, String senha, AvlEspec avl) {
       Espectador esp;
       esp = avl.localizar(cpf);
@@ -118,6 +138,10 @@ public class App {
       }
    }
 
+   /**
+    * Menu de Login
+    * @return Vetor contendo CPF e Senha digitados.
+    */
    public static String [] MenuLogin() {
       String[] dados = new String[2];
       Scanner ler = new Scanner(System.in);
@@ -133,9 +157,18 @@ public class App {
       dados[0] = cpf;
       dados[1] = senha;
 
+      ler.close();
+
       return dados;
    }
 
+   /**
+    * Menu principal pós-login (Página do usuário)
+    * @param esp Espectador logado.
+    * @param espectadores AVL de Espectadores carregada.
+    * @param localizado
+    * @return Opção selecionada.
+    */
    public static int MenuPrincipal(Espectador esp, AvlEspec espectadores, Espectador localizado) {
       int opcao;
       Scanner ler = new Scanner(System.in);
@@ -148,10 +181,16 @@ public class App {
       System.out.print("\nDigite a opção: ");
       opcao = ler.nextInt();
 
-      MenuPrincipalCase(opcao,espectadores,localizado);
+      MenuPrincipalCase(opcao, espectadores, localizado);
       return opcao;
    }
 
+   /**
+    * Encaminha opção selecionada no Menu Principal.
+    * @param opcao Opção selecionada
+    * @param espectadores AVL de Espectadores
+    * @param localizado
+    */
    public static  void MenuPrincipalCase(int opcao, AvlEspec espectadores, Espectador localizado){
       if (opcao == 1) { //opcao de mostrar os dados do espectador
          System.out.println("\nMeus dados:\n\n"+localizado.toString());
@@ -172,6 +211,91 @@ public class App {
       }
    }
 
+   /**
+    * Menu de Pesquisas
+    * @param espectadores AVL de Espectadores
+    * @param esp
+    * @param localizado
+    */
+   public static void  MenuPesquisas(AvlEspec espectadores, Espectador esp, Espectador localizado) {
+      int opcao2;
+      Scanner ler = new Scanner(System.in);
+
+      System.out.println("___________________________________\n\nPesquisas disponíveis:");
+      System.out.println("1- Espectador");
+      System.out.println("2- Série");
+      System.out.println("3- Voltar");
+      System.out.print("\nDigite a opção: ");
+      opcao2 = ler.nextInt();
+
+      if (opcao2 == 1) {
+         Scanner ler2 = new Scanner(System.in);
+         System.out.print("\nInsira o CPF do Espectador: ");
+         String cpf = ler2.nextLine();
+         Espectador esp1 = espectadores.localizar(cpf);
+
+         if (esp1 == null) {
+            System.out.println("\nEspectador não localizado! Tente novamente.\n");
+            MenuPesquisas(espectadores, esp, localizado);
+         }
+         else
+            MenuEspec(esp1, espectadores, localizado);
+      }
+
+      else if (opcao2 == 2)
+         MenuSeries(espectadores, esp, localizado);
+
+      else if (opcao2 == 3)
+         MenuPrincipal(esp,espectadores,localizado);
+
+      else {
+         System.out.println("\nOpção inválida! Tente novamente.\n");
+         MenuPesquisas(espectadores, esp, localizado);
+      }
+   }
+
+   /**
+    * Menu do Espectador Pesquisado
+    * @param esp
+    * @param espectadores
+    * @param localizado
+    */
+   public static void MenuEspec(Espectador esp, AvlEspec espectadores, Espectador localizado) {
+      int opcao;
+      Scanner ler = new Scanner(System.in);
+      System.out.println("___________________________________\n\nVocê está na página de " + esp.nome + "!\n");
+      System.out.println("1- Dados do Espectador");
+      System.out.println("2- Histórico de avaliações");
+      System.out.println("3- Voltar");
+      System.out.print("\nDigite a opção: ");
+      opcao = ler.nextInt();
+
+      if (opcao==1) {
+         ImprimirEspectador(esp);
+         MenuEspec(esp, espectadores, localizado);
+      }
+
+      else if (opcao==2) {
+         ImprimirHistorioAvaliacao(esp);
+         MenuEspec(esp, espectadores, localizado);
+      }
+
+      else if (opcao==3)
+         MenuPesquisas(espectadores, esp, localizado);
+
+      else {
+         System.out.println("\nOpção inválida! Tente novamente.\n");
+         MenuEspec(esp, espectadores, localizado);
+      }
+   }
+
+
+   /**
+    * Menu de Séries
+    * @param espectadores AVL de Espectadores.
+    * @param esp
+    * @param logado Espectador logado.
+    */
    public static void MenuSeries(AvlEspec espectadores, Espectador esp, Espectador logado){
       int escolhaSeries;
       Scanner ler2 = new Scanner(System.in);
@@ -224,80 +348,41 @@ public class App {
       }
    }
 
-   public static void  MenuPesquisas(AvlEspec espectadores, Espectador esp, Espectador localizado) {
-      int opcao2;
-      Scanner ler = new Scanner(System.in);
-
-      System.out.println("___________________________________\n\nPesquisas disponíveis:");
-      System.out.println("1- Espectador");
-      System.out.println("2- Série");
-      System.out.println("3- Voltar");
-      System.out.print("\nDigite a opção: ");
-      opcao2 = ler.nextInt();
-      String cpf;
-
-      if (opcao2 == 1) {
-         Scanner ler2 = new Scanner(System.in);
-         System.out.print("\nInsira o CPF do Espectador: ");
-         cpf = ler2.nextLine();
-         Espectador esp1 = espectadores.localizar(cpf);
-
-         if (esp1 == null) {
-            System.out.println("\nEspectador não localizado! Tente novamente.\n");
-            MenuPesquisas(espectadores, esp, localizado);
-         } else {
-            MenuEspec(esp1, espectadores, localizado);
-         }
-      }
-      else if (opcao2 == 2) {
-         MenuSeries(espectadores, esp, localizado);
-      }
-      else if (opcao2 == 3) {
-         MenuPrincipal(esp,espectadores,localizado);
+   // GRUPO DE MÉTODOS UTILITÁRIOS
+   /**
+    * Realiza busca na AVL de Séries Lançadas na Mesma Data
+    * @param dataPesquisada String. Data a ser pesquisada.
+    */
+   public static void buscaData(String dataPesquisada) {
+      AvlSeriesLancadas.Nodo listaLocalizada = seriesLancadas.localizar(seriesLancadas.raiz, dataPesquisada);
+      System.out.println("Busca realizada na data " + dataPesquisada + ": ");
+      if (listaLocalizada == null){
+         System.out.println("Não existem séries lançadas nessa data.\n");
       }
       else {
-         System.out.println("\nOpção inválida! Tente novamente.\n");
-         MenuPesquisas(espectadores, esp, localizado);
+         listaLocalizada.meuDado.imprimir();
       }
    }
 
-   public static void MenuEspec(Espectador esp, AvlEspec espectadores, Espectador localizado) {
-      int opcao;
-      Scanner ler = new Scanner(System.in);
-      System.out.println("___________________________________\n\nVocê está na página de " + esp.nome + "!\n");
-      System.out.println("1- Dados do Espectador");
-      System.out.println("2- Histórico de avaliações");
-      System.out.println("3- Voltar");
-      System.out.print("\nDigite a opção: ");
-      opcao = ler.nextInt();
-
-      if (opcao==1) {
-         ImprimirEspectador(esp);
-         MenuEspec(esp, espectadores, localizado);
-      }
-      else if (opcao==2) {
-         ImprimirHistorioAvaliacao(esp);
-         MenuEspec(esp, espectadores, localizado);
-      }
-      else if (opcao==3) {
-         MenuPesquisas(espectadores, esp, localizado);
-      }
-      else {
-         System.out.println("\nOpção inválida! Tente novamente.\n");
-         MenuEspec(esp, espectadores, localizado);
-      }
-   }
-
+   /**
+    * Impressão do espectador
+    * @param localizado Objeto Espectador.
+    */
    public static void ImprimirEspectador(Espectador localizado) {
       System.out.println(localizado.toString());
    }
 
+   /**
+    * Impressão do Histórico de Avaliações
+    * @param esp Objeto Espectador.
+    */
    public static void ImprimirHistorioAvaliacao(Espectador esp) {
       String historicoAval = esp.toStringAval();
       System.out.println(historicoAval);
    }
 
 
+   // Método principal
    public static void main(String[] args) throws FileNotFoundException {
       // Marcação de tempo para carregamento
       long tic = System.nanoTime();
@@ -319,8 +404,7 @@ public class App {
       System.out.println("\nTempo de carregamento = " + (toc - tic) / 1000000000 + " segundos\n");
 
 
-      // Teste de login
-
+      // LOGIN
       boolean menu;
       do {
          String[] dados = new String[2];
