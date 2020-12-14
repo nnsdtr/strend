@@ -15,7 +15,7 @@ public class MergeSort {
     * Método de ordenação MergeSort (Recursivo)
     * @param vetor Vetor a ser ordenado.
     * @param inicio Posição inicial do (sub)vetor a ser ordenado.
-    * @param fim Posição final do (sub))vetor a ser ordenado.
+    * @param fim Posição final do (sub)vetor a ser ordenado.
     */
    private static void merge(EspecAvalLista.Serie[] vetor, int inicio, int fim) {
       int meio;
@@ -54,7 +54,7 @@ public class MergeSort {
          poslivre++;
       }
 
-      for(i = inicioVet1; i <= meio; i++) {
+      for (i = inicioVet1; i <= meio; i++) {
          aux[poslivre] = vetor[i];
          poslivre++;
       }
@@ -64,7 +64,7 @@ public class MergeSort {
          poslivre++;
       }
 
-      for(i=inicio; i <= fim; i++)
+      for (i=inicio; i <= fim; i++)
          vetor[i] = aux[i];
    }
 }

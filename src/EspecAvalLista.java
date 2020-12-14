@@ -58,7 +58,7 @@ public class EspecAvalLista {
    }
 
    public Elemento sentinela;
-   public Elemento ultima;
+   public Elemento ultimo;
    public int numElemementos;
 
    /**
@@ -66,7 +66,7 @@ public class EspecAvalLista {
     */
    public EspecAvalLista() {
       this.sentinela = new Elemento(null);
-      this.ultima = sentinela;
+      this.ultimo = sentinela;
       this.numElemementos = 0;
    }
 
@@ -75,7 +75,7 @@ public class EspecAvalLista {
     * @return boolean. Verdadeiro se estiver vazia.
     */
    public boolean vazia() {
-      return ultima == sentinela;
+      return ultimo == sentinela;
    }
 
    /**
@@ -94,8 +94,8 @@ public class EspecAvalLista {
    public void inserir(String nome, int nota) {
       Elemento novo = new Elemento( new Serie(nome, nota) );
 
-      ultima.prox = novo;
-      ultima = novo;
+      ultimo.prox = novo;
+      ultimo = novo;
       numElemementos++;
    }
 
@@ -112,7 +112,7 @@ public class EspecAvalLista {
             Elemento retirada = aux.prox;
             aux.prox = retirada.prox;
 
-            if (retirada == ultima) ultima = aux;
+            if (retirada == ultimo) ultimo = aux;
             else retirada.prox = null;
 
             numElemementos--;

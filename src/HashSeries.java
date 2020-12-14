@@ -24,6 +24,7 @@ public class HashSeries {
       }
    }
 
+   // Atributos da Classe HashSeries
    private final int capacidade;
    private final ElemSerie[] vetorSeries;
    private final Integer[] vetorPesos;

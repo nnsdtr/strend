@@ -219,7 +219,7 @@ public class AvlEspec {
         int alturaEsq = (nodo.esquerda == null) ? -1 : nodo.esquerda.altura;
         int alturaDir = (nodo.direita == null) ? -1 : nodo.direita.altura;
 
-        // Atualização a altura do nodo
+        // Atualização da altura do nodo
         nodo.altura = 1 + Math.max(alturaEsq, alturaDir);
 
         // Atualização do fator de balanceamento do nodo
@@ -237,25 +237,22 @@ public class AvlEspec {
         if (nodo.fatorBalanco == -2) {
 
             // Caso Esquerda-Esquerda
-            if (nodo.esquerda.fatorBalanco <= 0) {
+            if (nodo.esquerda.fatorBalanco <= 0)
                 return casoEsqEsq(nodo);
 
             // Caso Esquerda-Direita
-            } else {
-                return casoEsqDir(nodo);
-            }
+            else return casoEsqDir(nodo);
+
 
         // Árvore desbalanceada para a direita
         } else if (nodo.fatorBalanco == +2) {
 
             // Caso Direita-Direita
-            if (nodo.direita.fatorBalanco >= 0) {
+            if (nodo.direita.fatorBalanco >= 0)
                 return casoDirDir(nodo);
 
             // Caso Direita-Esquerda
-            } else {
-                return casoDirEsq(nodo);
-            }
+            else return casoDirEsq(nodo);
         }
 
         // Retorna nodo se não houver desbalanceamento.
