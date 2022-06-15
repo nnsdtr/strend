@@ -1,3 +1,4 @@
 # strend
-## Algoritmos e Estruturas de Dados - PUCMinas - São Gabriel
-Desenvolvimento de estruturas de dados em aplicações.
+## Algoritmos e Estruturas de Dados \[2020.2] - PUCMinas - São Gabriel
+
+Desenvolvimento de estruturas de dados para aplicações.
